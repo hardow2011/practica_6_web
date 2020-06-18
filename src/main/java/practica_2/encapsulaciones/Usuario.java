@@ -2,9 +2,9 @@ package practica_2.encapsulaciones;
 
 public class Usuario {
 
-    String usuario;
-    String nombre;
-    String password;
+    private String usuario;
+    private String nombre;
+    private String password;
 
     public Usuario(){
         
