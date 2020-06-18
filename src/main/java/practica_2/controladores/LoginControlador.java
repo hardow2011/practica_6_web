@@ -25,6 +25,12 @@ public class LoginControlador extends BaseControlador {
                         ctx.redirect("/login.html");
                     }
                 });
+
+                get("/", ctx -> {
+                    Usuario usuario = ctx.sessionAttribute("usuario");
+                    ctx.result("Bienvenido"+usuario.getNombre());
+                });
+
             });
         });
 
