@@ -22,7 +22,7 @@ public class CookiesSesionesControlador extends BaseControlador {
             Usuario usuario = new Usuario(texto_usuario, nombre, password);
 
             ctx.sessionAttribute("usuario", usuario);
-            // ctx.redirect("/");
+            ctx.redirect("/");
 
         });
 
