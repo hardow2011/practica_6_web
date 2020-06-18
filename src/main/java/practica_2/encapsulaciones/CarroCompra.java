@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CarroCompra {
     
-    private int id;
+    private long id;
     private List<Producto> listaProductos;
     private int cantidad;
     private static int contadorIdCarroCompra = 0;
@@ -17,7 +17,7 @@ public class CarroCompra {
         contadorIdCarroCompra++;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
