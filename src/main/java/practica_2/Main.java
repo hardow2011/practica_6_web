@@ -19,5 +19,6 @@ public class Main {
         }).start();
 
         new LoginControlador(app).aplicarRutas();
+        new CookiesSesionesControlador(app).aplicarRutas();
     }
 }
