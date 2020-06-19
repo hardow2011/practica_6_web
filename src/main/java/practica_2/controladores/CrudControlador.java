@@ -26,12 +26,12 @@ public class CrudControlador extends BaseControlador {
         app.routes(() -> {
             path("/crud-productos", () -> {
 
-                // before(ctx -> {
-                //     Usuario usuario = ctx.sessionAttribute("usuario");
-                //     if(usuario == null){
-                //         ctx.redirect("/login.html");
-                //     }
-                // });
+                before(ctx -> {
+                    Usuario usuario = ctx.sessionAttribute("usuario");
+                    if(usuario == null){
+                        ctx.redirect("/login.html");
+                    }
+                });
                 
                 get("/", ctx -> {
                     ctx.redirect("/crud-productos/listar");
