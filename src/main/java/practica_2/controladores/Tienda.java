@@ -56,4 +56,8 @@ public class Tienda {
         listaProductos.set(listaProductos.indexOf(productoAModificar), producto);
     }
 
+	public void eliminarProducto(Producto producto) {
+        listaProductos.remove(producto);
+	}
+
 }

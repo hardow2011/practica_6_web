@@ -85,6 +85,14 @@ public class CrudControlador extends BaseControlador {
 
                 });
 
+                // TODO habilitar el borrado
+                get("/eliminar/:idProducto", ctx -> {
+                    int idProducto = ctx.pathParam("idProducto", Integer.class).get();
+                    Producto producto = tienda.getProductoPorId(idProducto);
+                    tienda.eliminarProducto(producto);
+                    ctx.redirect("/crud-productos/listar");
+                });
+
             });
         });
         

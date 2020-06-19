@@ -26,7 +26,8 @@
                     <td>${producto.id}</td>
                     <td>${producto.nombre}</td>
                     <td>${producto.precio}</td>
-                    <td><a href="/crud-productos/editar/${producto.id}">Editar</a>
+                    <td><a href="/crud-productos/editar/${producto.id}">Editar</a> |
+                        <a href="/crud-productos/eliminar/${producto.id}">Eliminar</a>
                     </td>
                 </tr>
                 </#foreach>
