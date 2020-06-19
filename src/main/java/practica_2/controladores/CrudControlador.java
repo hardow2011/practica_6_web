@@ -45,6 +45,21 @@ public class CrudControlador extends BaseControlador {
                     ctx.render("templates/listaProductos.ftl", modelo);
                 });
 
+                get("/crear", ctx -> {
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("accion", "/crud-productos/crear");
+                    ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
+                });
+
+                post("/crear", ctx -> {
+                    String nombreProducto = ctx.formParam("nombreProducto");
+                    double precioProducto = ctx.formParam("precioProducto", Double.class).get();
+
+                    tienda.agregarProducto(nombreProducto, precioProducto);
+                    ctx.redirect("/crud-productos");
+
+                });
+
             });
         });
         
