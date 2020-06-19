@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de productos</title>
-    <link href="/css/miEstilo.css" rel="stylesheet" >
+    <script src="myscripts.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="jumbotron">
             <h1 class="display-4">Lista de productos</h1>
-        </div>
+        </div> 
         </body>
-        <a href="/crud-productos/crear" class="btn btn-primary">Nuevo Estudiante</a>
+        <a href="/crud-productos/crear" class="btn btn-primary">Nuevo producto</a>
         <table>
             <thead>
                 <tr>
                     <th>id</th>
                     <th>Nombre</th>
                     <th>Precio</th>
-                </tr>
+                </tr>   
             </thead>
             <tbody>
                 <#foreach producto in listaProductos>
@@ -26,6 +26,8 @@
                     <td>${producto.id}</td>
                     <td>${producto.nombre}</td>
                     <td>${producto.precio}</td>
+                    <td><a href="/crud-productos/editar/${producto.id}">Editar</a>
+                    </td>
                 </tr>
                 </#foreach>
             </tbody>

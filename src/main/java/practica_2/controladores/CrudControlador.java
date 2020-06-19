@@ -7,6 +7,7 @@ import practica_2.util.BaseControlador;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +26,12 @@ public class CrudControlador extends BaseControlador {
         app.routes(() -> {
             path("/crud-productos", () -> {
 
-                before(ctx -> {
-                    Usuario usuario = ctx.sessionAttribute("usuario");
-                    if(usuario == null){
-                        ctx.redirect("/login.html");
-                    }
-                });
+                // before(ctx -> {
+                //     Usuario usuario = ctx.sessionAttribute("usuario");
+                //     if(usuario == null){
+                //         ctx.redirect("/login.html");
+                //     }
+                // });
                 
                 get("/", ctx -> {
                     ctx.redirect("/crud-productos/listar");
@@ -48,6 +49,7 @@ public class CrudControlador extends BaseControlador {
                 get("/crear", ctx -> {
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("accion", "/crud-productos/crear");
+                    modelo.put("titulo", "Crear");
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
 
@@ -57,6 +59,29 @@ public class CrudControlador extends BaseControlador {
 
                     tienda.agregarProducto(nombreProducto, precioProducto);
                     ctx.redirect("/crud-productos");
+                });
+
+                get("editar/:idProducto", ctx -> {
+                    Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
+
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("producto", producto);
+                    modelo.put("accion", "/crud-productos/editar");
+                    modelo.put("titulo", "Editar");
+
+                    // ctx.result(producto.getId() + " " + producto.getNombre() + " " + producto.getPrecio());
+                    ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
+                });
+
+                post("editar/", ctx -> {
+                    int idProducto = ctx.formParam("idProducto", Integer.class).get();
+                    String nuevoNombreProducto = ctx.formParam("nombreProducto");
+                    Double nuevoPrecioProducto = ctx.formParam("precioProducto", Double.class).get();
+
+                    Producto productoModificado = new Producto(idProducto, nuevoNombreProducto, nuevoPrecioProducto);
+
+                    tienda.modificarProducto(productoModificado);
+                    ctx.redirect("/crud-productos/listar");
 
                 });
 
