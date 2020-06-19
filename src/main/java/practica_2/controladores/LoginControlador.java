@@ -23,12 +23,12 @@ public class LoginControlador extends BaseControlador {
                     Usuario usuario = ctx.sessionAttribute("usuario");
                     if(usuario == null){
                         ctx.redirect("/login.html");
+                        
                     }
                 });
 
                 get("/", ctx -> {
-                    Usuario usuario = ctx.sessionAttribute("usuario");
-                    ctx.result("Bienvenido"+usuario.getNombre());
+                    ctx.redirect("/crud-productos/listar");
                 });
 
             });

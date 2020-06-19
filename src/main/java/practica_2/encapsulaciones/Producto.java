@@ -8,14 +8,14 @@ public class Producto {
     
     private int id;
     private String nombre;
-    private BigDecimal precio;
+    private double precio;
     private static int contadorIdProducto = 0;
 
-    public Producto(){
+    // public Producto(){
 
-    }
+    // }
 
-    public Producto(String nombre, BigDecimal precio){
+    public Producto(String nombre, double precio){
         this.id = contadorIdProducto;
         this.nombre = nombre;
         this.precio = precio;
@@ -37,11 +37,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public BigDecimal getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(BigDecimal precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

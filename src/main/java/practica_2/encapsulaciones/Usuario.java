@@ -6,9 +6,9 @@ public class Usuario {
     private String nombre;
     private String password;
 
-    public Usuario(){
+    // public Usuario(){
         
-    }
+    // }
 
     public Usuario(String usuario, String nombre, String password) {
         this.usuario = usuario;

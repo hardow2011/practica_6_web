@@ -16,6 +16,9 @@ public class Tienda {
     public Tienda(){
         listaUsuarios = new ArrayList<>();
         listaProductos = new ArrayList<>();
+
+        // listaProductos.add(new Producto("Papel de baño", 115.0));
+        // listaProductos.add(new Producto("Barco de pesca", 12500.0));
     }
 
     public static Tienda getInstancia() {
@@ -38,7 +41,7 @@ public class Tienda {
         listaUsuarios.add(usuario);
     }
 
-    public void agregarProducto(String nombre, BigDecimal precio){
+    public void agregarProducto(String nombre, double precio){
         Producto producto = new Producto(nombre, precio);
         listaProductos.add(producto);
     }
