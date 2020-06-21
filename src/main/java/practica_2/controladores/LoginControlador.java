@@ -28,7 +28,7 @@ public class LoginControlador extends BaseControlador {
                 // });
 
                 get("/", ctx -> {
-                    ctx.redirect("/crud-productos/listar");
+                    ctx.redirect("/carro-compra");
                 });
 
             });

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import practica_2.encapsulaciones.CarroCompra;
 import practica_2.encapsulaciones.Producto;
 import practica_2.encapsulaciones.Usuario;
 
@@ -12,10 +13,12 @@ public class Tienda {
     private static Tienda instancia;
     private List<Usuario> listaUsuarios;
     private List<Producto> listaProductos;
+    private CarroCompra carroCompra;
 
     public Tienda(){
         listaUsuarios = new ArrayList<>();
         listaProductos = new ArrayList<>();
+        carroCompra = new CarroCompra();
 
         listaProductos.add(new Producto("Papel de baño", 115.0));
         listaProductos.add(new Producto("Barco de pesca", 12500.0));
@@ -34,6 +37,12 @@ public class Tienda {
 
     public List<Producto> getListaProductos() {
         return listaProductos;
+    }
+    
+    public void setCantidades(List<Integer> listaCantidades) {
+        for(int i = 0; i < listaCantidades.size(); i++){
+            listaProductos.get(i).setCantidad(listaCantidades.get(i));
+        }
     }
 
     public void agregarUsuario(String nombreUsuario, String nombrePersona, String password){

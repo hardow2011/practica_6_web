@@ -7,13 +7,11 @@ public class CarroCompra {
     
     private long id;
     private List<Producto> listaProductos;
-    private int cantidad;
     private static int contadorIdCarroCompra = 0;
 
     public CarroCompra(){
         listaProductos = new ArrayList<>();
         this.id = contadorIdCarroCompra;
-        this.cantidad = 0;
         contadorIdCarroCompra++;
     }
 
@@ -29,17 +27,12 @@ public class CarroCompra {
         return listaProductos;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public void setListaProductos(List<Producto> listaProductos) {
+        this.listaProductos = listaProductos;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public void insertarProducto(Producto producto) {
+    public void insertarProducto(Producto producto, int cantidad) {
         listaProductos.add(producto);
-        cantidad++;
     }
 
 }

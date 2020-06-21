@@ -21,5 +21,6 @@ public class Main {
         new LoginControlador(app).aplicarRutas();
         new CookiesSesionesControlador(app).aplicarRutas();
         new CrudControlador(app).aplicarRutas();
+        new CarroCompraControlador(app).aplicarRutas();
     }
 }

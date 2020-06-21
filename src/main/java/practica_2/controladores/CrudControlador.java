@@ -79,13 +79,26 @@ public class CrudControlador extends BaseControlador {
                     Double nuevoPrecioProducto = ctx.formParam("precioProducto", Double.class).get();
 
                     Producto productoModificado = new Producto(idProducto, nuevoNombreProducto, nuevoPrecioProducto);
+                    // Obtener la cantidad de un producto en caso de que alguien esté en medio de hacer su carrito de compras...
+                    // así no pierde la cantidad que había seleccionado.
+                    productoModificado.setCantidad(tienda.getProductoPorId(idProducto).getCantidad());
 
                     tienda.modificarProducto(productoModificado);
                     ctx.redirect("/crud-productos/listar");
 
                 });
 
-                // TODO habilitar el borrado
+                get("visualizar/:idProducto", ctx ->{
+                    Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("producto", producto);
+                    modelo.put("accion", "");
+                    modelo.put("titulo", "Visualizar");
+                    modelo.put("visualizar", true);
+                    ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
+
+                });
+
                 get("/eliminar/:idProducto", ctx -> {
                     int idProducto = ctx.pathParam("idProducto", Integer.class).get();
                     Producto producto = tienda.getProductoPorId(idProducto);

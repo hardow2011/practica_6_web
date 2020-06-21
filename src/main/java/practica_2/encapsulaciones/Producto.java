@@ -10,6 +10,7 @@ public class Producto {
     private String nombre;
     private double precio;
     private static int contadorIdProducto = 0;
+    private int cantidad;
 
     // public Producto(){
 
@@ -19,6 +20,7 @@ public class Producto {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
+        this.cantidad = 0;
     }
 
     public Producto(String nombre, double precio){
@@ -49,6 +51,14 @@ public class Producto {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
 }

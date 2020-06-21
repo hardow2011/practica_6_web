@@ -27,6 +27,7 @@
                     <td>${producto.nombre}</td>
                     <td>${producto.precio}</td>
                     <td><a href="/crud-productos/editar/${producto.id}">Editar</a> |
+                        <a href="/crud-productos/visualizar/${producto.id}">Visualizar</a> |
                         <a href="/crud-productos/eliminar/${producto.id}">Eliminar</a>
                     </td>
                 </tr>
