@@ -67,6 +67,30 @@ public class Tienda {
 
 	public void eliminarProducto(Producto producto) {
         listaProductos.remove(producto);
-	}
+    }
+    
+    public List<Producto> getListaProductosConMasDeCeroCantidad() {
+
+        List<Producto> listaProductosConMasDeUnaCantidad = new ArrayList<>();
+
+        // Recupero todos los productos con la cantidad mayor a cero y los agrego al arreglo productosConMasDeUnaCantidad
+        for(int i = 0; i < getListaProductos().size(); i++){
+            if(getListaProductos().get(i).getCantidad() > 0){
+                listaProductosConMasDeUnaCantidad.add(getListaProductos().get(i));
+            }
+        }
+        return listaProductosConMasDeUnaCantidad;
+    }
+
+    public Double getTotalCarrito() {
+        Double total = (double) 0;
+
+        for(int i = 0; i < getListaProductosConMasDeCeroCantidad().size(); i++){
+            total += getListaProductosConMasDeCeroCantidad().get(i).getPrecio() * getListaProductosConMasDeCeroCantidad().get(i).getCantidad();
+        }
+
+        return total;
+        
+    }
 
 }

@@ -1,15 +1,11 @@
-h1{
-    color: red;
+.confirmar, .crear, .regresar{
+    float: right
 }
 
-.barcamp{
-    text-align: center;
-    color: red;
-
+.float-right{
+    float: right
 }
 
-body{
-    background-image: url('/img/monumento_barcamp2014.jpg');
-    background-repeat: no-repeat;
-    background-position: 200px 50px;
+.float-left{
+    float: left
 }

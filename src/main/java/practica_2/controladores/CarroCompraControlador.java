@@ -40,7 +40,22 @@ public class CarroCompraControlador extends BaseControlador {
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listaProductos", listaProductos);
                     modelo.put("accion", "/carro-compra/compras");
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     ctx.render("templates/vistaTienda.ftl", modelo);
+                });
+
+                get("/compras", ctx -> {
+
+
+                    // ctx.result(Arrays.toString(listaCantidades.toArray()));
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("tituloVentana", "Titulo Plantilla");
+                    modelo.put("titulo", "Titulo Plantilla");
+                    modelo.put("listaProductosConMasDeUnaCantidad", tienda.getListaProductosConMasDeCeroCantidad());
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    modelo.put("total", tienda.getTotalCarrito());
+                    ctx.render("templates/carroCompra.ftl", modelo);
+
                 });
 
                 post("/compras", ctx -> {
@@ -52,8 +67,28 @@ public class CarroCompraControlador extends BaseControlador {
 
                     tienda.setCantidades(listaCantidades);
 
-                    ctx.result(Arrays.toString(listaCantidades.toArray()));
+                    // ctx.result(Arrays.toString(listaCantidades.toArray()));
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("tituloVentana", "Titulo Plantilla");
+                    modelo.put("titulo", "Titulo Plantilla");
+                    modelo.put("listaProductosConMasDeUnaCantidad", tienda.getListaProductosConMasDeCeroCantidad());
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    modelo.put("total", tienda.getTotalCarrito());
+                    ctx.render("templates/carroCompra.ftl", modelo);
 
+                });
+
+                get("/eliminar/:idProducto", ctx -> {
+                    int idProducto = ctx.pathParam("idProducto", Integer.class).get();
+                    tienda.getProductoPorId(idProducto).setCantidad(0);
+
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("tituloVentana", "Titulo Plantilla");
+                    modelo.put("titulo", "Titulo Plantilla");
+                    modelo.put("listaProductosConMasDeUnaCantidad", tienda.getListaProductosConMasDeCeroCantidad());
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    modelo.put("total", tienda.getTotalCarrito());
+                    ctx.render("templates/carroCompra.ftl", modelo);
                 });
 
             });

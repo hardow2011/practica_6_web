@@ -15,36 +15,40 @@
         <a class="nav-link" href="/carro-compra/vista-tienda">Comprar</a>
         <a class="nav-link" href="#">Ventas realizadas</a>
         <a class="nav-link" href="/crud-productos/listar">Administrar productos</a>
-        <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>
+          <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>
         </div>
       </div>
     </nav>
     <div class="container">
         <div class="jumbotron">
-            <h1 class="display-4">Lista de productos</h1>
+            <h1 class="display-4">Carro de compra</h1>
         </div> 
-        <form enctype="application/x-www-form-urlencoded" action=${accion} method="post">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                    </tr>   
-                </thead>
-                <tbody>
-                    <#foreach producto in listaProductos>
-                    <tr>
-                        <td>${producto.nombre}</td>
-                        <td>${producto.precio}</td>
-                        <td><input type="number" value="${producto.cantidad}" name="cantidadProducto" required/><br></td>
-                    </tr>
-                    </#foreach>
-                </tbody>
-            </table>
-            <input class="btn btn-success confirmar" type="submit" value="Confirmar"/>
-        </form>
-    </div> 
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>   
+            </thead>
+            <tbody>
+                <#foreach producto in listaProductosConMasDeUnaCantidad>
+                <tr>
+                    <td>${producto.nombre}</td>
+                    <td>${producto.precio}</td>
+                    <td>${producto.cantidad}</td>
+                    <td>${producto.cantidad * producto.precio}</td>
+                    <td><a href="/carro-compra/eliminar/${producto.id}" class="btn btn-danger">Eliminar</a></td>
+                    <#--  <td><input type="number" value="${producto.cantidad}" name="cantidadProducto" required/><br></td>  -->
+                </tr>
+                </#foreach>
+            </tbody>
+        </table>
+    <h3 class="float-right">Total: ${total}</h3>
+    <#--  <a href="/carro-compra/procesar-compra" class="btn btn-success float-left">Procesar compra</a>  -->
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

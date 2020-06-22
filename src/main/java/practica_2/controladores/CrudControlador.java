@@ -43,6 +43,7 @@ public class CrudControlador extends BaseControlador {
 
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listaProductos", listaProductos);
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     ctx.render("templates/listaProductos.ftl", modelo);
                 });
 
@@ -50,6 +51,7 @@ public class CrudControlador extends BaseControlador {
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("accion", "/crud-productos/crear");
                     modelo.put("titulo", "Crear");
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
 
@@ -70,6 +72,7 @@ public class CrudControlador extends BaseControlador {
                     modelo.put("titulo", "Editar");
 
                     // ctx.result(producto.getId() + " " + producto.getNombre() + " " + producto.getPrecio());
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
 
@@ -95,6 +98,7 @@ public class CrudControlador extends BaseControlador {
                     modelo.put("accion", "");
                     modelo.put("titulo", "Visualizar");
                     modelo.put("visualizar", true);
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
 
                 });
