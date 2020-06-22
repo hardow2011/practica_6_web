@@ -28,6 +28,7 @@ public class Tienda {
 
         listaProductos.add(new Producto("Papel de baño", 115.0));
         listaProductos.add(new Producto("Barco de pesca", 12500.0));
+        agregarUsuario("admin", "admin", "admin");
     }
 
     public static Tienda getInstancia() {

@@ -12,10 +12,11 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-        <a class="nav-link" href="/carro-compra/vista-tienda">Comprar</a>
-        <a class="nav-link" href="#">Ventas realizadas</a>
-        <a class="nav-link" href="/crud-productos/listar">Administrar productos</a>
-          <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>
+            <a class="nav-link" href="/carro-compra/vista-tienda">Comprar</a>
+            <a class="nav-link" href="/carro-compra/ventas-productos">Ventas realizadas</a>
+            <a class="nav-link" href="/crud-productos/listar">Administrar productos</a>
+            <a class="nav-link" href="/crear-usuario">Crear usuario</a>
+            <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>
         </div>
       </div>
     </nav>

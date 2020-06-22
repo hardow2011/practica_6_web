@@ -101,6 +101,13 @@ public class CarroCompraControlador extends BaseControlador {
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });
 
+                get("ventas-productos", ctx -> {
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("listaVentasProductos", tienda.getListaVentasProductos());
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    ctx.render("templates/ventasProductos.ftl", modelo);
+                });
+
             });
         });
 

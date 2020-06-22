@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lista producto</title>
+    <title>Crear usuario</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="/css/miEstilo.css" rel="stylesheet" >
 
@@ -16,41 +16,26 @@
         <a class="nav-link" href="/carro-compra/ventas-productos">Ventas realizadas</a>
         <a class="nav-link" href="/crud-productos/listar">Administrar productos</a>
         <a class="nav-link" href="/crear-usuario">Crear usuario</a>
-          <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>
+        <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>
         </div>
       </div>
     </nav>
     <div class="container">
         <div class="jumbotron">
-            <h1 class="display-4">Listado de ventas</h1>
-        </div>
-        <#foreach venta in listaVentasProductos>
-            <h1>${venta.nombreCliente} - ${venta.fechaCompra?string('dd/MM/yyyy')}</h1>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
-                    </tr>   
-                </thead>
-                <tbody>
-                <#foreach producto in venta.listaProductos>
-                    <tr>
-                        <td>${producto.nombre}</td>
-                        <td>${producto.precio}</td>
-                        <td>${producto.cantidad}</td>
-                        <td>${producto.cantidad * producto.precio}</td>
-                        <#--  <td>${venta.fechaCompra?string('dd/MM/yyyy')}</td>
-                        <td>${venta.totalCompra}</td>  -->
-                    </tr>
-                </#foreach>
-                </tbody>
-            </table>
-            <h3 class="float-right">Total: ${venta.totalCompra}</h3>
-        </#foreach>
-    </div>
+            <h1 class="display-4">Crear usuario</h1>
+        </div> 
+        <form enctype="application/x-www-form-urlencoded" action=${accion} method="post">
+          <div class="form-group">
+            <label for="usuarioInput">Usuario</label>
+            <input type="text" class="form-control" id="usuarioInput" name="usuario" required/><br>
+            <label for="nombreInput">Nombre</label>
+            <input type="text" class="form-control" id="nombreInput" name="nombre" required/><br>
+            <label for="passwordInput">Contraseña</label>
+            <input type="password" class="form-control" id="passwordInput" name="password" required/><br/>
+            <input type="submit" class="btn btn-success confirmar" value="Ingresar"/>
+          </div>
+        </form>
+    </div> 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
