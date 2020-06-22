@@ -1,5 +1,6 @@
 package practica_2.encapsulaciones;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,15 +10,15 @@ public class VentasProductos {
     private Date fechaCompra;
     private String nombreCliente;
     private List<Producto> listaProductos;
-    private int cantidad;
+    private Double totalCompra;
     private static int contadorIdVentaProductos = 0;
 
-    public VentasProductos(Date fechaCompra, String nombreCliente, List<Producto> listaProductos, int cantidad) {
+    public VentasProductos(String nombreCliente, List<Producto> listaProductos) {
         this.id = contadorIdVentaProductos;
-        this.fechaCompra = fechaCompra;
+        this.fechaCompra = new Date();
         this.nombreCliente = nombreCliente;
+        this.totalCompra = (double) 0;
         this.listaProductos = listaProductos;
-        this.cantidad = cantidad;
         contadorIdVentaProductos++;
     }
 
@@ -53,12 +54,12 @@ public class VentasProductos {
         this.listaProductos = listaProductos;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public Double getTotalCompra() {
+        return totalCompra;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setTotalCompra(Double totalCompra) {
+        this.totalCompra = totalCompra;
     }
 
 }

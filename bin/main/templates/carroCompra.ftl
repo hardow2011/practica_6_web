@@ -22,7 +22,21 @@
     <div class="container">
         <div class="jumbotron">
             <h1 class="display-4">Carro de compra</h1>
-        </div> 
+        </div>
+
+        <div class="form-group bg-light rounded-corners">
+            <h4 class="ten-percent-padding-left">Datos del cliente</h4>
+            <hr/>
+            <#--  <div class="form-inline">  -->
+                <form class="form-horizontal" enctype="application/x-www-form-urlencoded" action="/carro-compra/procesar-compra" method="post">
+                    <div class="form-group form-inline ten-percent-padding-left">
+                        <label for="nombreClienteInput">Nombre del cliente</label>
+                        <input type="text" class="form-control" id="nombreClienteInput" name="nombreCliente"/><br>
+                    </div>
+                </form>
+            <#--  </div>  -->
+        </div>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -46,8 +60,8 @@
                 </#foreach>
             </tbody>
         </table>
-    <h3 class="float-right">Total: ${total}</h3>
-    <#--  <a href="/carro-compra/procesar-compra" class="btn btn-success float-left">Procesar compra</a>  -->
+    <h3>Total: ${total}</h3>
+    <a href="/carro-compra/procesar-compra" class="btn btn-success confirmar">Procesar compra</a>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

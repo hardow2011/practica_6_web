@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 import practica_2.encapsulaciones.CarroCompra;
 import practica_2.util.BaseControlador;
 import practica_2.encapsulaciones.Producto;
+import practica_2.encapsulaciones.VentasProductos;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -89,6 +90,15 @@ public class CarroCompraControlador extends BaseControlador {
                     modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     modelo.put("total", tienda.getTotalCarrito());
                     ctx.render("templates/carroCompra.ftl", modelo);
+                });
+
+                post("/procesar-compra", ctx -> {
+                    String nombreCliente = ctx.formParam("nombreCliente");
+                    tienda.agregarVentaProducto(tienda.getListaProductosConMasDeCeroCantidad(), nombreCliente);
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("listaVentasProductos", tienda.getListaVentasProductos());
+                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    ctx.render("templates/ventasProductos.ftl", modelo);
                 });
 
             });

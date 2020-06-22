@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Formulario de Acceso</title>
+    <title>Lista producto</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="/css/miEstilo.css" rel="stylesheet" >
 
@@ -14,26 +14,41 @@
         <div style="display:flex; justify-content:flex-end; width:100%; padding:0;">
         <a class="nav-link" href="/carro-compra/vista-tienda">Comprar</a>
         <a class="nav-link" href="#">Ventas realizadas</a>
-        <a class="nav-link" href="/crud-productos/crear">Administrar productos</a>
-          <a class="nav-link" href="/carro-compra/compras">Carrito</a>
+        <a class="nav-link" href="/crud-productos/listar">Administrar productos</a>
+          <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>
         </div>
       </div>
     </nav>
     <div class="container">
-      <div class="jumbotron">
-          <h1 class="display-4">Formulario de Acceso</h1>
-      </div> 
-      <form action="/autenticar" method="post">
-        <div class="form-group"></div>
-          <label for="usuarioInput">Usuario</label>
-          <input type="text" class="form-control" id="usuarioInput" name="usuario" required/><br>
-          <label for="nombreInput">Nombre</label>
-          <input type="text" class="form-control" id="nombreInput" name="nombre" required/><br>
-          <label for="passwordInput">Contraseña</label>
-          <input type="password" class="form-control" id="passwordInput" name="password" required/><br/>
-          <input type="submit" class="btn btn-success confirmar" value="Ingresar"/>
+        <div class="jumbotron">
+            <h1 class="display-4">Listado de ventas</h1>
         </div>
-      </form>
+        <#foreach venta in listaVentasProductos>
+            <h1>${venta.nombreCliente} - ${venta.fechaCompra?string('dd/MM/yyyy')}</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>   
+                </thead>
+                <tbody>
+                <#foreach producto in venta.listaProductos>
+                    <tr>
+                        <td>${producto.nombre}</td>
+                        <td>${producto.precio}</td>
+                        <td>${producto.cantidad}</td>
+                        <td>${producto.cantidad * producto.precio}</td>
+                        <#--  <td>${venta.fechaCompra?string('dd/MM/yyyy')}</td>
+                        <td>${venta.totalCompra}</td>  -->
+                    </tr>
+                </#foreach>
+                </tbody>
+            </table>
+            <h3 class="float-right">Total: ${venta.totalCompra}</h3>
+        </#foreach>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

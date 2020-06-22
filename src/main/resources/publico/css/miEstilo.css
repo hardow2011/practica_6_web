@@ -9,3 +9,15 @@
 .float-left{
     float: left
 }
+
+.rounded-corners{
+    border-radius: 15px;
+}
+
+.ten-percent-padding-left{
+    padding-left: 10%;
+}
+
+.half-width{
+    width:50%
+}   

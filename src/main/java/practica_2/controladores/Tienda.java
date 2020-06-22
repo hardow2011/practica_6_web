@@ -1,23 +1,29 @@
 package practica_2.controladores;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import practica_2.encapsulaciones.CarroCompra;
 import practica_2.encapsulaciones.Producto;
 import practica_2.encapsulaciones.Usuario;
+import practica_2.encapsulaciones.VentasProductos;
 
 public class Tienda {
 
     private static Tienda instancia;
     private List<Usuario> listaUsuarios;
     private List<Producto> listaProductos;
+    private List<VentasProductos> listaVentasProductos;
     private CarroCompra carroCompra;
 
     public Tienda(){
         listaUsuarios = new ArrayList<>();
         listaProductos = new ArrayList<>();
+        listaVentasProductos = new ArrayList<>();
         carroCompra = new CarroCompra();
 
         listaProductos.add(new Producto("Papel de baño", 115.0));
@@ -37,6 +43,37 @@ public class Tienda {
 
     public List<Producto> getListaProductos() {
         return listaProductos;
+    }
+
+    public List<VentasProductos> getListaVentasProductos() {
+        return listaVentasProductos;
+    }
+
+    public void agregarVentaProducto(List<Producto> listaProductos, String nombreCliente){
+        VentasProductos ventasProductos = new VentasProductos(nombreCliente, clonarLista(listaProductos));
+
+        // Obtengo el total del carrito
+        Double total = getTotalCarrito();
+        ventasProductos.setTotalCompra(total);
+
+        listaVentasProductos.add(ventasProductos);
+
+        // Después de comprar  los productos, se vacía el carrito de compras
+        for(int i = 0; i < getListaProductos().size(); i++){
+            getListaProductos().get(i).setCantidad(0);
+        }
+
+    }
+
+    // Es nececario clonar la lista de productos al pasarla a la venta. Porque de otro modo, si se modifica...
+    // el producto en la tienda, también se modifica en la venta.
+    // Eso no es deseable ya que las cantidades de todos los productos se reinician a cero después de una venta.
+    public static List<Producto> clonarLista(List<Producto> listaProductos) {
+        List<Producto> clonedList = new ArrayList<Producto>(listaProductos.size());
+        for (Producto producto : listaProductos) {
+            clonedList.add(new Producto(producto));
+        }
+        return clonedList;
     }
     
     public void setCantidades(List<Integer> listaCantidades) {

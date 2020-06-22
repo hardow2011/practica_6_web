@@ -12,9 +12,12 @@ public class Producto {
     private static int contadorIdProducto = 0;
     private int cantidad;
 
-    // public Producto(){
-
-    // }
+    public Producto(Producto producto){
+        this.id = producto.id;
+        this.nombre = producto.nombre;
+        this.precio = producto.precio;
+        this.cantidad = producto.cantidad;
+    }
 
     public Producto(int id, String nombre, double precio){
         this.id = id;
