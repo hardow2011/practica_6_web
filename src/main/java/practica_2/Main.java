@@ -3,15 +3,31 @@
  */
 package practica_2;
 
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.staticfiles.Location;
 import practica_2.controladores.*;
+import practica_2.encapsulaciones.Producto;
+import practica_2.services.BootStrapServices;
+import practica_2.services.DataBaseServices;
+import practica_2.services.ProductoServices;
 
 public class Main {
 
-    public static void main(String[] args) {
-        // System.out.println(new Main().getGreeting());
+    public static void main(String[] args) throws SQLException {
+        
+        //Iniciando el servicio
+        BootStrapServices.startDb();
+
+        //Prueba de Conexión.
+        DataBaseServices.getInstancia().testConexion();
+
+        BootStrapServices.crearTablas();
+
         Javalin app = Javalin.create(config ->{
             // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
              config.addStaticFiles("/publico");
@@ -22,5 +38,11 @@ public class Main {
         new CookiesSesionesControlador(app).aplicarRutas();
         new CrudControlador(app).aplicarRutas();
         new CarroCompraControlador(app).aplicarRutas();
+
+        // BootStrapServices.stopDb();
+
+        // Javalin app = Javalin.create(config ->{
+            
+        // }).start();
     }
 }

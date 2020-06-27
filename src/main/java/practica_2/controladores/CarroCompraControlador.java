@@ -5,6 +5,7 @@ import practica_2.encapsulaciones.CarroCompra;
 import practica_2.util.BaseControlador;
 import practica_2.encapsulaciones.Producto;
 import practica_2.encapsulaciones.VentasProductos;
+import practica_2.services.ProductoServices;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 
 public class CarroCompraControlador extends BaseControlador {
 
+    ProductoServices productoServices = new ProductoServices();
     Tienda tienda = Tienda.getInstancia();
 
     public CarroCompraControlador(Javalin app) {
@@ -36,7 +38,7 @@ public class CarroCompraControlador extends BaseControlador {
                 });
 
                 get("/vista-tienda", ctx -> {
-                    List<Producto> listaProductos = tienda.getListaProductos();
+                    List<Producto> listaProductos = productoServices.listaProductos();
 
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listaProductos", listaProductos);

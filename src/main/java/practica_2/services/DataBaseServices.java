@@ -3,6 +3,7 @@ package practica_2.services;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DataBaseServices {
@@ -32,7 +33,7 @@ public class DataBaseServices {
         try {
             Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException ex) {
-            // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -41,7 +42,7 @@ public class DataBaseServices {
         try {
             con = DriverManager.getConnection(URL, "sa", "");
         } catch (SQLException ex) {
-            // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
         }
         return con;
     }
@@ -51,7 +52,7 @@ public class DataBaseServices {
             getConexion().close();
             System.out.println("Conexión realizado con éxito...");
         } catch (SQLException ex) {
-            // Logger.getLogger(EstudianteServices.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
