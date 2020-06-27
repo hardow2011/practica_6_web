@@ -58,7 +58,7 @@ public class ProductoServices {
      * @param est
      * @return
      */
-    public boolean crearProducto(Producto prod){
+    public boolean crearProducto(String nombre, Double precio){
         boolean ok =false;
 
         Connection con = null;
@@ -69,9 +69,10 @@ public class ProductoServices {
             //
             PreparedStatement prepareStatement = con.prepareStatement(query);
             //Antes de ejecutar seteo los parametros.
-            prepareStatement.setInt(1, prod.getId());
-            prepareStatement.setDouble(2, prod.getPrecio());
-            prepareStatement.setInt(3, prod.getCantidad());
+            // prepareStatement.setInt(1, prod.getId());
+            prepareStatement.setString(1, nombre);
+            prepareStatement.setDouble(2, precio);
+            prepareStatement.setInt(3, 0);
             //
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;

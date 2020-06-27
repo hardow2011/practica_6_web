@@ -3,6 +3,7 @@ package practica_2.controladores;
 import io.javalin.Javalin;
 import practica_2.encapsulaciones.Producto;
 import practica_2.encapsulaciones.Usuario;
+import practica_2.services.ProductoServices;
 import practica_2.util.BaseControlador;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 public class CrudControlador extends BaseControlador {
 
+    ProductoServices productoServices = new ProductoServices();
     Tienda tienda = Tienda.getInstancia();
 
     public CrudControlador(Javalin app) {
@@ -39,7 +41,7 @@ public class CrudControlador extends BaseControlador {
 
                 get("/listar", ctx -> {
                     // Recuperando el listado de productos del modelo Singleton.
-                    List<Producto> listaProductos = tienda.getListaProductos();
+                    List<Producto> listaProductos = productoServices.listaProductos();
 
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listaProductos", listaProductos);
@@ -59,7 +61,8 @@ public class CrudControlador extends BaseControlador {
                     String nombreProducto = ctx.formParam("nombreProducto");
                     double precioProducto = ctx.formParam("precioProducto", Double.class).get();
 
-                    tienda.agregarProducto(nombreProducto, precioProducto);
+                    // tienda.agregarProducto(nombreProducto, precioProducto);
+                    productoServices.crearProducto(nombreProducto, precioProducto);
                     ctx.redirect("/crud-productos");
                 });
 
