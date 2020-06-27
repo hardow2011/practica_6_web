@@ -53,11 +53,6 @@ public class ProductoServices {
         return lista;
     }
 
-    /**
-     * 
-     * @param est
-     * @return
-     */
     public boolean crearProducto(String nombre, Double precio){
         boolean ok =false;
 
@@ -88,6 +83,41 @@ public class ProductoServices {
         }
 
         return ok;
+    }
+
+    public Producto getProducto(int id) {
+        Producto prod = null;
+        Connection con = null;
+        try {
+            //utilizando los comodines (?)...
+            String query = "select * from producto where id = ?";
+            con = DataBaseServices.getInstancia().getConexion();
+            //
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setInt(1, id);
+            //Ejecuto...
+            ResultSet rs = prepareStatement.executeQuery();
+            while(rs.next()){
+                String nombre = rs.getString("nombre");
+                Double precio = rs.getDouble("precio");
+                int cantidad = rs.getInt("cantidad");
+
+                prod = new Producto(id, nombre, precio, cantidad);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return prod;
     }
 
 }
