@@ -39,9 +39,12 @@ public class CarroCompraControlador extends BaseControlador {
 
                 get("/vista-tienda", ctx -> {
                     List<Producto> listaProductos = productoServices.listaProductos();
+                    // Crear una lista de enteros del mismo tamaño que la lista de productos llena de ceros.
+                    List<Integer> listaCantidades = new ArrayList<Integer>(Collections.nCopies(listaProductos.size(), 0));
 
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listaProductos", listaProductos);
+                    modelo.put("listaCantidades", listaCantidades);
                     modelo.put("accion", "/carro-compra/compras");
                     modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     ctx.render("templates/vistaTienda.ftl", modelo);
@@ -54,7 +57,7 @@ public class CarroCompraControlador extends BaseControlador {
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("tituloVentana", "Titulo Plantilla");
                     modelo.put("titulo", "Titulo Plantilla");
-                    modelo.put("listaProductosConMasDeUnaCantidad", tienda.getListaProductosConMasDeCeroCantidad());
+                    modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
                     modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     modelo.put("total", tienda.getTotalCarrito());
                     ctx.render("templates/carroCompra.ftl", modelo);
@@ -62,19 +65,38 @@ public class CarroCompraControlador extends BaseControlador {
                 });
 
                 post("/compras", ctx -> {
-                    List<Integer> listaCantidades = new ArrayList<Integer>();
 
                     // Se pasan todos los elementos recibidos por cantidadProducto de vistaTienda a listaCantidades...
                     // Pero primero hay que convertir a int, porque llegan como String.
-                    for(String s : ctx.formParams("cantidadProducto")) listaCantidades.add(Integer.valueOf(s));
+                    List<Integer> listaCantidades = new ArrayList<Integer>();
+                    for(String s : ctx.formParams("listaCantidades")) listaCantidades.add(Integer.valueOf(s));
 
-                    tienda.setCantidades(listaCantidades);
+                    // Busco si hay un carro de compras en el contexto de sesión
+                    CarroCompra carroCompra = ctx.sessionAttribute("carroCompra");
+
+                    // Si no hay un carro de compras en el contexto de sesión
+                    if(carroCompra == null){
+                        List<Producto> listaProductos = productoServices.listaProductos();
+                        carroCompra = new CarroCompra();
+
+                        // Agrego todos los productos que tuvieron más de cero cantidades a un carro de compras
+                        for(int i = 0; i < listaCantidades.size(); i++){
+                            if(listaCantidades.get(i) != 0){
+                                carroCompra.insertarProducto(listaProductos.get(i), listaCantidades.get(i));
+                            }
+                        }
+
+                        // Agrego el carro de compras al contexto de sesión
+                        ctx.sessionAttribute("carroCompra", carroCompra);
+                    }
+
+                    // tienda.setCantidades(listaCantidades);
 
                     // ctx.result(Arrays.toString(listaCantidades.toArray()));
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("tituloVentana", "Titulo Plantilla");
                     modelo.put("titulo", "Titulo Plantilla");
-                    modelo.put("listaProductosConMasDeUnaCantidad", tienda.getListaProductosConMasDeCeroCantidad());
+                    modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
                     modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     modelo.put("total", tienda.getTotalCarrito());
                     ctx.render("templates/carroCompra.ftl", modelo);

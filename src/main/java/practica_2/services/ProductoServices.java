@@ -32,10 +32,9 @@ public class ProductoServices {
                 int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
                 Double precio = rs.getDouble("precio");
-                int cantidad = rs.getInt("cantidad");
 
 
-                Producto prod = new Producto(id, nombre, precio, cantidad);
+                Producto prod = new Producto(id, nombre, precio);
 
                 lista.add(prod);
             }
@@ -59,7 +58,7 @@ public class ProductoServices {
         Connection con = null;
         try {
 
-            String query = "insert into producto(nombre, precio, cantidad) values(?,?,?)";
+            String query = "insert into producto(nombre, precio) values(?,?)";
             con = DataBaseServices.getInstancia().getConexion();
             //
             PreparedStatement prepareStatement = con.prepareStatement(query);
@@ -67,7 +66,6 @@ public class ProductoServices {
             // prepareStatement.setInt(1, prod.getId());
             prepareStatement.setString(1, nombre);
             prepareStatement.setDouble(2, precio);
-            prepareStatement.setInt(3, 0);
             //
             int fila = prepareStatement.executeUpdate();
             ok = fila > 0 ;
@@ -101,9 +99,8 @@ public class ProductoServices {
             while(rs.next()){
                 String nombre = rs.getString("nombre");
                 Double precio = rs.getDouble("precio");
-                int cantidad = rs.getInt("cantidad");
 
-                prod = new Producto(id, nombre, precio, cantidad);
+                prod = new Producto(id, nombre, precio);
 
             }
 

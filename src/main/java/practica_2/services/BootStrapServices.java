@@ -38,16 +38,15 @@ public class BootStrapServices {
                 "(\n" +
                 "  ID INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,\n" +
                 "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-                "  PRECIO FLOAT NOT NULL,\n" +
-                "  CANTIDAD INTEGER NOT NULL\n" +
+                "  PRECIO FLOAT NOT NULL\n" +
                 ");"+
                 "\n"+
-                "INSERT INTO PRODUCTO(NOMBRE, PRECIO, CANTIDAD) "+
-                "VALUES('Arroz', 75.99, 0);\n"+
-                "INSERT INTO PRODUCTO(NOMBRE, PRECIO, CANTIDAD) "+
-                "VALUES('Globos', 15, 0);\n"+
-                "INSERT INTO PRODUCTO(NOMBRE, PRECIO, CANTIDAD) "+
-                "VALUES('Gafas de sol', 250, 0);";
+                "INSERT INTO PRODUCTO(NOMBRE, PRECIO) "+
+                "VALUES('Arroz', 75.99);\n"+
+                "INSERT INTO PRODUCTO(NOMBRE, PRECIO) "+
+                "VALUES('Globos', 15);\n"+
+                "INSERT INTO PRODUCTO(NOMBRE, PRECIO) "+
+                "VALUES('Gafas de sol', 250);";
         Connection con = DataBaseServices.getInstancia().getConexion();
         Statement statement = con.createStatement();
         statement.execute(sql);

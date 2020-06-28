@@ -49,19 +49,18 @@
                 </tr>   
             </thead>
             <tbody>
-                <#foreach producto in listaProductosConMasDeUnaCantidad>
+                <#list carroCompra.listaProductos as producto>
                 <tr>
                     <td>${producto.nombre}</td>
                     <td>${producto.precio}</td>
-                    <td>${producto.cantidad}</td>
-                    <td>${producto.cantidad * producto.precio}</td>
+                    <td>${carroCompra.listaCantidades[producto?index]}</td>
+                    <td>${carroCompra.listaCantidades[producto?index] * producto.precio}</td>
                     <td><a href="/carro-compra/eliminar/${producto.id}" class="btn btn-danger">Eliminar</a></td>
-                    <#--  <td><input type="number" value="${producto.cantidad}" name="cantidadProducto" required/><br></td>  -->
                 </tr>
-                </#foreach>
+                </#list>
             </tbody>
         </table>
-    <h3>Total: ${total}</h3>
+    <#--  <h3>Total: ${total}</h3>  -->
     <a href="/carro-compra/procesar-compra" class="btn btn-success confirmar">Procesar compra</a>
     </div>
     <!-- Optional JavaScript -->

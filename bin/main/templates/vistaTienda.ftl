@@ -34,16 +34,16 @@
                     </tr>   
                 </thead>
                 <tbody>
-                    <#foreach producto in listaProductos>
+                    <#list listaCantidades as cantidad>
                     <tr>
-                        <td>${producto.nombre}</td>
-                        <td>${producto.precio}</td>
-                        <td><input type="number" value="${producto.cantidad}" name="cantidadProducto" required/><br></td>
+                        <td>${listaProductos[cantidad?index].nombre}</td>
+                        <td>${listaProductos[cantidad?index].precio}</td>
+                        <td><input type="number" value="${cantidad}" name="listaCantidades" required/><br></td>
                     </tr>
-                    </#foreach>
+                    </#list>
                 </tbody>
             </table>
-            <input class="btn btn-success confirmar" type="submit" value="Confirmar"/>
+            <input class="btn btn-success confirmar" type="submit" value="Agregar al carrito"/>
         </form>
     </div> 
     <!-- Optional JavaScript -->
