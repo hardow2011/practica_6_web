@@ -31,7 +31,7 @@
                         <label for="nombreInput">Nombre</label>
                         <input readonly="true" type="text" class="form-control" value="${producto.nombre}"  id="nombreInput" name="nombreProducto"/><br>
                         <label for="precioInput">Precio</label>
-                        <input type="number" step="0.01" class="form-control" value="${producto.precio?string['0']}" id="precioInput" name="precioProducto" disables/><br>
+                        <input readonly="true" type="number" step="0.01" class="form-control" value="${producto.precio?string['0']}" id="precioInput" name="precioProducto" disables/><br>
                     <#else>
                         <input type="hidden" value="${producto.id}" name="idProducto"/>
                         <label for="nombreInput">Nombre</label>

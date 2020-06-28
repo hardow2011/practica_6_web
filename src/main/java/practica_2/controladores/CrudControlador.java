@@ -94,7 +94,8 @@ public class CrudControlador extends BaseControlador {
                 });
 
                 get("visualizar/:idProducto", ctx ->{
-                    Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
+                    // Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
+                    Producto producto = productoServices.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("producto", producto);
                     modelo.put("accion", "");
