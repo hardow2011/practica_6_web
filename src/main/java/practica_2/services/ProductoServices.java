@@ -152,4 +152,34 @@ public class ProductoServices {
         return ok;
     }
 
+    public boolean eliminarProducto(int id){
+        boolean ok =false;
+
+        Connection con = null;
+        try {
+
+            String query = "delete from producto where id = ?";
+            con = DataBaseServices.getInstancia().getConexion();
+            //
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+
+            //Indica el where...
+            prepareStatement.setInt(1, id);
+            //
+            int fila = prepareStatement.executeUpdate();
+            ok = fila > 0 ;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return ok;
+    }
+
 }
