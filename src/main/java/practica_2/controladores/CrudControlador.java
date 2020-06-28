@@ -67,7 +67,8 @@ public class CrudControlador extends BaseControlador {
                 });
 
                 get("editar/:idProducto", ctx -> {
-                    Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
+                    // Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
+                    Producto producto = productoServices.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
 
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("producto", producto);
@@ -80,16 +81,14 @@ public class CrudControlador extends BaseControlador {
                 });
 
                 post("editar/", ctx -> {
-                    int idProducto = ctx.formParam("idProducto", Integer.class).get();
-                    String nuevoNombreProducto = ctx.formParam("nombreProducto");
-                    Double nuevoPrecioProducto = ctx.formParam("precioProducto", Double.class).get();
+                    int id = ctx.formParam("idProducto", Integer.class).get();
+                    String nombre = ctx.formParam("nombreProducto");
+                    Double precio = ctx.formParam("precioProducto", Double.class).get();
 
-                    Producto productoModificado = new Producto(idProducto, nuevoNombreProducto, nuevoPrecioProducto);
                     // Obtener la cantidad de un producto en caso de que alguien esté en medio de hacer su carrito de compras...
                     // así no pierde la cantidad que había seleccionado.
-                    productoModificado.setCantidad(tienda.getProductoPorId(idProducto).getCantidad());
 
-                    tienda.modificarProducto(productoModificado);
+                    productoServices.modificarProducto(id, nombre, precio);
                     ctx.redirect("/crud-productos/listar");
 
                 });

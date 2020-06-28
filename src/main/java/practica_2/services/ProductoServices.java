@@ -85,7 +85,7 @@ public class ProductoServices {
         return ok;
     }
 
-    public Producto getProducto(int id) {
+    public Producto getProductoPorId(int id) {
         Producto prod = null;
         Connection con = null;
         try {
@@ -118,6 +118,38 @@ public class ProductoServices {
         }
 
         return prod;
+    }
+
+    public boolean modificarProducto(int id, String nombre, Double precio){
+        boolean ok =false;
+
+        Connection con = null;
+        try {
+
+            String query = "update producto set nombre=?, precio=? where id = ?";
+            con = DataBaseServices.getInstancia().getConexion();
+            //
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setString(1, nombre);
+            prepareStatement.setDouble(2, precio);
+            //Indica el where...
+            prepareStatement.setInt(3, id);
+            //
+            int fila = prepareStatement.executeUpdate();
+            ok = fila > 0 ;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return ok;
     }
 
 }
