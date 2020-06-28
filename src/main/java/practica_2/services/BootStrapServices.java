@@ -46,7 +46,26 @@ public class BootStrapServices {
                 "INSERT INTO PRODUCTO(NOMBRE, PRECIO) "+
                 "VALUES('Globos', 15);\n"+
                 "INSERT INTO PRODUCTO(NOMBRE, PRECIO) "+
-                "VALUES('Gafas de sol', 250);";
+                "VALUES('Gafas de sol', 250);"+
+                "\n"+
+                "CREATE TABLE IF NOT EXISTS VENTA\n" +
+                "(\n" +
+                "ID INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,\n" +
+                "FECHA DATE NOT NULL,\n" +
+                "NOMBRECLIENTE VARCHAR(100) NOT NULL,\n" +
+                "TOTALCOMPRA FLOAT NOT NULL\n"+
+                ");"+
+                "\n"+
+                "CREATE TABLE IF NOT EXISTS PRODUCTOVENDIDO\n" +
+                "(\n"+
+                "ID INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,\n" +
+                "NOMBRE VARCHAR(100) NOT NULL,\n" +
+                "PRECIO FLOAT NOT NULL,\n" +
+                "CANTIDAD INT NOT NULL,\n" +
+                "VENTA_ID INT NOT NULL,\n" +
+                "FOREIGN KEY (VENTA_ID) REFERENCES VENTA(ID)\n"+
+                ");"+
+                "\n";
         Connection con = DataBaseServices.getInstancia().getConexion();
         Statement statement = con.createStatement();
         statement.execute(sql);
