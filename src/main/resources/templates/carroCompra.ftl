@@ -49,15 +49,17 @@
                 </tr>   
             </thead>
             <tbody>
-                <#list carroCompra.listaProductos as producto>
-                <tr>
-                    <td>${producto.nombre}</td>
-                    <td>${producto.precio}</td>
-                    <td>${carroCompra.listaCantidades[producto?index]}</td>
-                    <td>${carroCompra.listaCantidades[producto?index] * producto.precio}</td>
-                    <td><a href="/carro-compra/eliminar/${producto.id}" class="btn btn-danger">Eliminar</a></td>
-                </tr>
-                </#list>
+                <#if carroCompra??>
+                    <#list carroCompra.listaProductos as producto>
+                    <tr>
+                        <td>${producto.nombre}</td>
+                        <td>${producto.precio}</td>
+                        <td>${carroCompra.listaCantidades[producto?index]}</td>
+                        <td>${carroCompra.listaCantidades[producto?index] * producto.precio}</td>
+                        <td><a href="/carro-compra/eliminar/${producto.id}" class="btn btn-danger">Eliminar</a></td>
+                    </tr>
+                    </#list>
+                </#if>
             </tbody>
         </table>
     <#--  <h3>Total: ${total}</h3>  -->
