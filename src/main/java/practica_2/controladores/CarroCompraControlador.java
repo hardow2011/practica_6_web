@@ -126,10 +126,23 @@ public class CarroCompraControlador extends BaseControlador {
                     int idProducto = ctx.pathParam("idProducto", Integer.class).get();
                     // tienda.getProductoPorId(idProducto).setCantidad(0);
 
+                    CarroCompra carroCompraActual = ctx.sessionAttribute("carroCompra");
+                    CarroCompra nuevoCarroCompra = new CarroCompra();
+
+                    for(int i = 0; i < carroCompraActual.getListaCantidades().size(); i++){
+                        if(carroCompraActual.getListaProductos().get(i).getId() != idProducto){
+                            nuevoCarroCompra.insertarProducto(carroCompraActual.getListaProductos().get(i), carroCompraActual.getListaCantidades().get(i));
+                        }
+                    }
+
+                    // Para eliminar un producto del carro de compra, se borra el atributo de sesión y se crea de nuevo si el producto.
+                    ctx.req.removeAttribute("carroCompra");
+                    ctx.sessionAttribute("carroCompra", nuevoCarroCompra);
+
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("tituloVentana", "Titulo Plantilla");
                     modelo.put("titulo", "Titulo Plantilla");
-                    modelo.put("listaProductosConMasDeUnaCantidad", tienda.getListaProductosConMasDeCeroCantidad());
+                    modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
                     modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     modelo.put("total", tienda.getTotalCarrito());
                     ctx.render("templates/carroCompra.ftl", modelo);
