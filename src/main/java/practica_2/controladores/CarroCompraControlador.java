@@ -74,21 +74,40 @@ public class CarroCompraControlador extends BaseControlador {
                     // Busco si hay un carro de compras en el contexto de sesión
                     CarroCompra carroCompra = ctx.sessionAttribute("carroCompra");
 
+                    List<Producto> listaProductos = productoServices.listaProductos();
                     // Si no hay un carro de compras en el contexto de sesión
                     if(carroCompra == null){
-                        List<Producto> listaProductos = productoServices.listaProductos();
                         carroCompra = new CarroCompra();
-
                         // Agrego todos los productos que tuvieron más de cero cantidades a un carro de compras
                         for(int i = 0; i < listaCantidades.size(); i++){
                             if(listaCantidades.get(i) != 0){
                                 carroCompra.insertarProducto(listaProductos.get(i), listaCantidades.get(i));
                             }
                         }
+                    // De otro modo
+                    }else{
+                        for(int i = 0; i < listaCantidades.size(); i++){
+                            if(listaCantidades.get(i) != 0){
+                                for(int j = 0; j < carroCompra.getListaCantidades().size(); j++){
+                                    // Le sumo la nueva cantidad a los productos ya existentes
+                                    if(listaProductos.get(i).getId() == carroCompra.getListaProductos().get(j).getId()){
+                                        carroCompra.getListaCantidades().set(j, carroCompra.getListaCantidades().get(j)+listaCantidades.get(i));
+                                        System.out.println("Segunda");
+                                        break;
+                                    }
+                                    // O si el producto no estaba en el carro de compras, lo agrego
+                                    else if(j ==  carroCompra.getListaCantidades().size()-1){
+                                        carroCompra.insertarProducto(listaProductos.get(i), listaCantidades.get(i));
+                                        System.out.println(i+" "+j);
+                                        break;
 
-                        // Agrego el carro de compras al contexto de sesión
-                        ctx.sessionAttribute("carroCompra", carroCompra);
+                                    }
+                                }
+                            }
+                        }
                     }
+
+                    ctx.sessionAttribute("carroCompra", carroCompra);
 
                     // tienda.setCantidades(listaCantidades);
 
@@ -105,7 +124,7 @@ public class CarroCompraControlador extends BaseControlador {
 
                 get("/eliminar/:idProducto", ctx -> {
                     int idProducto = ctx.pathParam("idProducto", Integer.class).get();
-                    tienda.getProductoPorId(idProducto).setCantidad(0);
+                    // tienda.getProductoPorId(idProducto).setCantidad(0);
 
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("tituloVentana", "Titulo Plantilla");

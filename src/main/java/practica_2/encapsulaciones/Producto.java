@@ -10,14 +10,12 @@ public class Producto {
     private String nombre;
     private double precio;
     private static int contadorIdProducto = 0;
-    private int cantidad;
 
     // Para clonar producto
     public Producto(Producto producto){
         this.id = producto.id;
         this.nombre = producto.nombre;
         this.precio = producto.precio;
-        this.cantidad = producto.cantidad;
     }
 
     // Para editar producto
@@ -25,7 +23,6 @@ public class Producto {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad = 0;
     }
 
     // Para crear producto
@@ -41,7 +38,6 @@ public class Producto {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad = cantidad;
         // El contador id será igual a último id recuperado +1 (para que el id de la próxima inserción continúe con el contador)
         // contadorIdProducto = id+1;
     }
@@ -67,14 +63,6 @@ public class Producto {
 
     public void setPrecio(double precio) {
         this.precio = precio;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
     }
 
 }
