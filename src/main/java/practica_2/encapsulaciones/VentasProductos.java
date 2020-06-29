@@ -10,6 +10,7 @@ public class VentasProductos {
     private Date fechaCompra;
     private String nombreCliente;
     private List<Producto> listaProductos;
+    private List<Integer> listaCantidades;
     private Double totalCompra;
     private static int contadorIdVentaProductos = 0;
 
@@ -20,6 +21,15 @@ public class VentasProductos {
         this.totalCompra = (double) 0;
         this.listaProductos = listaProductos;
         contadorIdVentaProductos++;
+    }
+
+    public VentasProductos(int id, Date fecha, Double total, String nombreCliente) {
+        this.id = id;
+        this.fechaCompra = fecha;
+        this.nombreCliente = nombreCliente;
+        this.totalCompra = total;
+        this.listaProductos = listaProductos;
+        this.listaCantidades = listaCantidades;
     }
 
     public int getId() {
@@ -60,6 +70,14 @@ public class VentasProductos {
 
     public void setTotalCompra(Double totalCompra) {
         this.totalCompra = totalCompra;
+    }
+
+    public List<Integer> getListaCantidades() {
+        return listaCantidades;
+    }
+
+    public void setListaCantidades(List<Integer> listaCantidades) {
+        this.listaCantidades = listaCantidades;
     }
 
 }

@@ -34,7 +34,6 @@
                         <label for="nombreClienteInput">Nombre del cliente</label>
                         <input type="text" class="form-control" id="nombreClienteInput" name="nombreCliente"/><br>
                     </div>
-                </form>
             <#--  </div>  -->
         </div>
 
@@ -62,8 +61,12 @@
                 </#if>
             </tbody>
         </table>
-    <#--  <h3>Total: ${total}</h3>  -->
-    <a href="/carro-compra/procesar-compra" class="btn btn-success confirmar">Procesar compra</a>
+        <#if carroCompra??>
+            <h3>Total: ${total}</h3>
+        </#if>
+        <#--  <a href="/carro-compra/procesar-compra" class="btn btn-success confirmar">Procesar compra</a>  -->
+        <input type="submit" class="btn btn-success crear" value="Procesar compra"/>
+        </form>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

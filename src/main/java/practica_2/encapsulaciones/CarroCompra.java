@@ -46,4 +46,19 @@ public class CarroCompra {
         listaCantidades.add(cantidad);
     }
 
+    public Double getTotalCarrito(){
+        Double total = (double) 0;
+
+        for(int i = 0; i < listaCantidades.size(); i++){
+            total += listaCantidades.get(i) *listaProductos.get(i).getPrecio();
+        }
+
+        return total;
+    }
+
+    public void vaciarCarroCompra(){
+        listaProductos = new ArrayList<>();
+        listaCantidades = new ArrayList<>();
+    }
+
 }
