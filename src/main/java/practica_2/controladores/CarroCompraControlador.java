@@ -25,7 +25,7 @@ public class CarroCompraControlador extends BaseControlador {
 
     ProductoServices productoServices = new ProductoServices();
     VentaServices ventaServices = new VentaServices();
-    Tienda tienda = Tienda.getInstancia();
+    // Tienda tienda = Tienda.getInstancia();
 
     public CarroCompraControlador(Javalin app) {
         super(app);
@@ -183,7 +183,7 @@ public class CarroCompraControlador extends BaseControlador {
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
-                    modelo.put("total", tienda.getTotalCarrito());
+                    modelo.put("total", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getTotalCarrito());
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
                         modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());

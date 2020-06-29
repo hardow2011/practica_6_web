@@ -18,7 +18,7 @@ import java.util.Map;
 public class CrudControlador extends BaseControlador {
 
     ProductoServices productoServices = new ProductoServices();
-    Tienda tienda = Tienda.getInstancia();
+    // Tienda tienda = Tienda.getInstancia();
 
     public CrudControlador(Javalin app) {
         super(app);

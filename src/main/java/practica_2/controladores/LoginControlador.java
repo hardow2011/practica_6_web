@@ -16,7 +16,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 
 public class LoginControlador extends BaseControlador {
 
-    Tienda tienda = Tienda.getInstancia();
+    // Tienda tienda = Tienda.getInstancia();
     StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
     UsuarioServices usuarioServices = new UsuarioServices();
 
