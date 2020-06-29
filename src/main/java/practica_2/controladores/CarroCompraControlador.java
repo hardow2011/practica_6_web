@@ -78,13 +78,15 @@ public class CarroCompraControlador extends BaseControlador {
                     if(ctx.sessionAttribute("carroCompra") != null){
                         modelo.put("total", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getTotalCarrito());
                     }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
+                    }
                     ctx.render("templates/carroCompra.ftl", modelo);
 
                 });
 
                 post("/compras", ctx -> {
-
-                    System.out.println(ctx.sessionAttribute("carroCompra") == null);
 
                     // Se pasan todos los elementos recibidos por cantidadProducto de vistaTienda a listaCantidades...
                     // Pero primero hay que convertir a int, porque llegan como String.
@@ -108,27 +110,21 @@ public class CarroCompraControlador extends BaseControlador {
                     // De otro modo
                     }else{
                         // System.out.println("No era nulo");
-                        System.out.println(carroCompra.getListaCantidades().size());
                         for(int i = 0; i < listaCantidades.size(); i++){
                             if(listaCantidades.get(i) != 0){
-                                System.out.println("Un prod");
                                 if(carroCompra.getListaCantidades().size() == 0){
                                     carroCompra.insertarProducto(listaProductos.get(i), listaCantidades.get(i));
-                                    System.out.println("Cond 1");
                                     continue;
                                 }
                                 for(int j = 0; j < carroCompra.getListaCantidades().size(); j++){
                                     // Le sumo la nueva cantidad a los productos ya existentes
-                                    System.out.println("Entro aquiiiii");
                                     if(listaProductos.get(i).getId() == carroCompra.getListaProductos().get(j).getId()){
-                                        System.out.println("Cond 2");
                                         carroCompra.getListaCantidades().set(j, carroCompra.getListaCantidades().get(j)+listaCantidades.get(i));
                                         break;
                                     }
                                     // O si el producto no estaba en el carro de compras, lo agrego
                                     else if(j ==  carroCompra.getListaCantidades().size()-1){
                                         carroCompra.insertarProducto(listaProductos.get(i), listaCantidades.get(i));
-                                        System.out.println("Cond 3");
                                         break;
                                     }
                                 }
@@ -152,6 +148,10 @@ public class CarroCompraControlador extends BaseControlador {
                     }
                     if(ctx.sessionAttribute("carroCompra") != null){
                         modelo.put("total", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getTotalCarrito());
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
                     }
                     ctx.render("templates/carroCompra.ftl", modelo);
 
@@ -184,6 +184,10 @@ public class CarroCompraControlador extends BaseControlador {
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
                     modelo.put("total", tienda.getTotalCarrito());
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
+                    }
                     ctx.render("templates/carroCompra.ftl", modelo);
                 });
 
@@ -198,6 +202,10 @@ public class CarroCompraControlador extends BaseControlador {
                         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
                     }
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });
@@ -214,6 +222,10 @@ public class CarroCompraControlador extends BaseControlador {
                         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
                     }
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });

@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div style="display:flex; justify-content:flex-start; padding:0;">
+        <div style="flex-grow: 1; justify-content:flex-start; padding:0;">
             <#if !conectado??>
                 <a class="nav-link" href="/login">Login</a>
             <#else>

@@ -32,9 +32,7 @@ public class LoginControlador extends BaseControlador {
             path("/", () -> {
                 before(ctx -> {
                     if(Objects.nonNull(ctx.cookie("recuerdame"))){
-                        System.out.println("Aquiiii estamossss");
                         if(ctx.sessionAttribute("usuario") == null){
-                            System.out.println(usuarioServices.getUsuariobyId(Integer.parseInt(ctx.cookie("recuerdame"))).getNombre());
                             ctx.sessionAttribute("usuario", usuarioServices.getUsuariobyId(Integer.parseInt(ctx.cookie("recuerdame"))));
                         }
                     }
@@ -70,6 +68,10 @@ public class LoginControlador extends BaseControlador {
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
                     modelo.put("accion", "/crear-usuario");
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
+                    }
                     ctx.render("/templates/crearUsuario.ftl", modelo);
                 });
 

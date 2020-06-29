@@ -51,6 +51,10 @@ public class CrudControlador extends BaseControlador {
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
+                    }
                     ctx.render("templates/listaProductos.ftl", modelo);
                 });
 
@@ -62,6 +66,10 @@ public class CrudControlador extends BaseControlador {
                         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
                     }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
@@ -89,6 +97,10 @@ public class CrudControlador extends BaseControlador {
                         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
                     }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
@@ -118,6 +130,10 @@ public class CrudControlador extends BaseControlador {
                         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
                     }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
 
