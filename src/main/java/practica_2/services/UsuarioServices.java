@@ -81,4 +81,39 @@ public class UsuarioServices {
         return lista;
     }
 
+    public Usuario getUsuariobyId(int id) {
+        Usuario usuario = null;
+        Connection con = null;
+        try {
+            //utilizando los comodines (?)...
+            String query = "select * from usuario where id = ?";
+            con = DataBaseServices.getInstancia().getConexion();
+            //
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setInt(1, id);
+            //Ejecuto...
+            ResultSet rs = prepareStatement.executeQuery();
+            while(rs.next()){
+                String nombreUsuario = rs.getString("NOMBREUSUARIO");
+                String nombrePersona = rs.getString("NOMBREPERSONA");
+                String password = rs.getString("CONTRASEGNA");
+
+                usuario = new Usuario(id, nombreUsuario, nombrePersona, password);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return usuario;
+    }
+
 }

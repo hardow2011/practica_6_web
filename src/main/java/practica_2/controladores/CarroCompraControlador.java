@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 import practica_2.encapsulaciones.CarroCompra;
 import practica_2.util.BaseControlador;
 import practica_2.encapsulaciones.Producto;
+import practica_2.encapsulaciones.Usuario;
 import practica_2.encapsulaciones.VentasProductos;
 import practica_2.services.ProductoServices;
 import practica_2.services.VentaServices;
@@ -53,6 +54,10 @@ public class CarroCompraControlador extends BaseControlador {
                         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
                     }
                     ctx.render("templates/vistaTienda.ftl", modelo);
                 });

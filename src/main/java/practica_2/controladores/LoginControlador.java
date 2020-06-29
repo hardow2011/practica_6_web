@@ -10,6 +10,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -29,13 +30,25 @@ public class LoginControlador extends BaseControlador {
         app.routes(() -> {
 
             path("/", () -> {
-                // before("/", ctx -> {
-                //     Usuario usuario = ctx.sessionAttribute("usuario");
-                //     if(usuario == null){
-                //         ctx.redirect("/login.html");
-                        
-                //     }
-                // });
+                before(ctx -> {
+                    if(Objects.nonNull(ctx.cookie("recuerdame"))){
+                        System.out.println("Aquiiii estamossss");
+                        if(ctx.sessionAttribute("usuario") == null){
+                            System.out.println(usuarioServices.getUsuariobyId(Integer.parseInt(ctx.cookie("recuerdame"))).getNombre());
+                            ctx.sessionAttribute("usuario", usuarioServices.getUsuariobyId(Integer.parseInt(ctx.cookie("recuerdame"))));
+                        }
+                    }
+                });
+
+                get("/login", ctx -> {
+                    ctx.redirect("login.html");
+                });
+                get("/logout", ctx -> {
+                    // Hacer nulo el atributo de sesión del usuario en caso de logout
+                    ctx.req.getSession().setAttribute("usuario", null);
+                    ctx.cookie("recuerdame", "null", 0);
+                    ctx.redirect("login.html");
+                });
 
 
                 before("/crear-usuario", ctx -> {

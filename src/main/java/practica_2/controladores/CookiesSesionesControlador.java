@@ -1,5 +1,7 @@
 package practica_2.controladores;
 
+import java.util.Objects;
+
 import javax.imageio.plugins.tiff.ExifGPSTagSet;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -23,6 +25,7 @@ public class CookiesSesionesControlador extends BaseControlador {
 
     @Override
     public void aplicarRutas(){
+
 
         app.post("/autenticar", ctx -> {
             // Recibiendo los valores en los campos usuario y password de un form que envíe a la acción autenticar.
@@ -48,7 +51,15 @@ public class CookiesSesionesControlador extends BaseControlador {
                     // System.out.println((tienda.getListaUsuarios().get(i).getUsuario()+" "+texto_usuario+" | "+tienda.getListaUsuarios().get(i).getPassword()+" "+password));
                     // System.out.println(tienda.getListaUsuarios().get(i).getUsuario().equals(texto_usuario) && tienda.getListaUsuarios().get(i).getPassword().equals(password));
                     ctx.sessionAttribute("usuario", usuarioServices.getListaUsuarios().get(i));
+                    // ctx.cookie("recuerdame", String.valueOf(usuarioServices.getListaUsuarios().get(i).getId()), 604800);
                     existe = true;
+                    // System.out.println(Objects.nonNull(ctx.formParam("recuerdame")));
+                    // Si el campo recuerdame no es nulo, crear una cookie llamada recuerdame con el nombre de usuario
+                    if(Objects.nonNull(ctx.formParam("recuerdame"))){
+                        // System.out.println("entroooooooooooo");
+                        ctx.cookie("recuerdame", String.valueOf(usuarioServices.getListaUsuarios().get(i).getId()), 604800);
+                    }
+
                     ctx.redirect("crud-productos");
                     break;
                 }

@@ -11,6 +11,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      </div>
         <div style="display:flex; justify-content:flex-end; width:100%; padding:0;">
             <a class="nav-link" href="/carro-compra/vista-tienda">Comprar</a>
             <a class="nav-link" href="/carro-compra/ventas-productos">Ventas realizadas</a>
