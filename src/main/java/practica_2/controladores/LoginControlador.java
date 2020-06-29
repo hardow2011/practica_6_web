@@ -2,6 +2,7 @@ package practica_2.controladores;
 
 import io.javalin.Javalin;
 import practica_2.encapsulaciones.Usuario;
+import practica_2.encapsulaciones.CarroCompra;
 import practica_2.util.BaseControlador;
 // import io.javalin.Javalin;
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -45,7 +46,11 @@ public class LoginControlador extends BaseControlador {
 
                 get("/crear-usuario", ctx -> {
                     Map<String, Object> modelo = new HashMap<>();
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     modelo.put("accion", "/crear-usuario");
                     ctx.render("/templates/crearUsuario.ftl", modelo);
                 });

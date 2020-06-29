@@ -2,6 +2,7 @@ package practica_2.controladores;
 
 import io.javalin.Javalin;
 import practica_2.encapsulaciones.Producto;
+import practica_2.encapsulaciones.CarroCompra;
 import practica_2.encapsulaciones.Usuario;
 import practica_2.services.ProductoServices;
 import practica_2.util.BaseControlador;
@@ -45,7 +46,11 @@ public class CrudControlador extends BaseControlador {
 
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listaProductos", listaProductos);
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     ctx.render("templates/listaProductos.ftl", modelo);
                 });
 
@@ -53,7 +58,11 @@ public class CrudControlador extends BaseControlador {
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("accion", "/crud-productos/crear");
                     modelo.put("titulo", "Crear");
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
 
@@ -76,7 +85,11 @@ public class CrudControlador extends BaseControlador {
                     modelo.put("titulo", "Editar");
 
                     // ctx.result(producto.getId() + " " + producto.getNombre() + " " + producto.getPrecio());
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
 
@@ -101,7 +114,11 @@ public class CrudControlador extends BaseControlador {
                     modelo.put("accion", "");
                     modelo.put("titulo", "Visualizar");
                     modelo.put("visualizar", true);
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
 
                 });

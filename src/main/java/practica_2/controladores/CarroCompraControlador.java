@@ -49,7 +49,11 @@ public class CarroCompraControlador extends BaseControlador {
                     modelo.put("listaProductos", listaProductos);
                     modelo.put("listaCantidades", listaCantidades);
                     modelo.put("accion", "/carro-compra/compras");
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     ctx.render("templates/vistaTienda.ftl", modelo);
                 });
 
@@ -61,7 +65,11 @@ public class CarroCompraControlador extends BaseControlador {
                     modelo.put("tituloVentana", "Titulo Plantilla");
                     modelo.put("titulo", "Titulo Plantilla");
                     modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     if(ctx.sessionAttribute("carroCompra") != null){
                         modelo.put("total", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getTotalCarrito());
                     }
@@ -132,7 +140,11 @@ public class CarroCompraControlador extends BaseControlador {
                     modelo.put("tituloVentana", "Titulo Plantilla");
                     modelo.put("titulo", "Titulo Plantilla");
                     modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     if(ctx.sessionAttribute("carroCompra") != null){
                         modelo.put("total", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getTotalCarrito());
                     }
@@ -161,7 +173,11 @@ public class CarroCompraControlador extends BaseControlador {
                     modelo.put("tituloVentana", "Titulo Plantilla");
                     modelo.put("titulo", "Titulo Plantilla");
                     modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     modelo.put("total", tienda.getTotalCarrito());
                     ctx.render("templates/carroCompra.ftl", modelo);
                 });
@@ -173,19 +189,27 @@ public class CarroCompraControlador extends BaseControlador {
                     ctx.req.getSession().setAttribute("carroCompra", new CarroCompra());
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listaVentas", ventaServices.getListaVentas());
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });
 
                 get("ventas-productos", ctx -> {
                     Map<String, Object> modelo = new HashMap<>();
-                    for(int i = 0; i < ventaServices.getListaVentas().size(); i++){
-                        for(int j = 0; j < ventaServices.getListaVentas().get(i).getListaProductos().size(); j++){
-                            System.out.println(ventaServices.getListaVentas().get(i).getId()+": "+ventaServices.getListaVentas().get(i).getListaProductos().get(j).getNombre()+"("+ventaServices.getListaVentas().get(i).getListaCantidades().get(j)+")");
-                        }
-                    }
+                    // for(int i = 0; i < ventaServices.getListaVentas().size(); i++){
+                    //     for(int j = 0; j < ventaServices.getListaVentas().get(i).getListaProductos().size(); j++){
+                    //         System.out.println(ventaServices.getListaVentas().get(i).getId()+": "+ventaServices.getListaVentas().get(i).getListaProductos().get(j).getNombre()+"("+ventaServices.getListaVentas().get(i).getListaCantidades().get(j)+")");
+                    //     }
+                    // }
                     modelo.put("listaVentas", ventaServices.getListaVentas());
-                    modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });
 
