@@ -28,8 +28,6 @@ public class VentasProductos {
         this.fechaCompra = fecha;
         this.nombreCliente = nombreCliente;
         this.totalCompra = total;
-        this.listaProductos = listaProductos;
-        this.listaCantidades = listaCantidades;
     }
 
     public int getId() {

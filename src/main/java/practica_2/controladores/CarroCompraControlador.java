@@ -168,12 +168,11 @@ public class CarroCompraControlador extends BaseControlador {
 
                 post("/procesar-compra", ctx -> {
                     String nombreCliente = ctx.formParam("nombreCliente");
-                    tienda.agregarVentaProducto(tienda.getListaProductosConMasDeCeroCantidad(), nombreCliente);
                     ventaServices.crearVenta(nombreCliente, ((CarroCompra) ctx.sessionAttribute("carroCompra")));
                     // Vaciar el carro de compras después de procesar la compra.
                     ctx.req.getSession().setAttribute("carroCompra", new CarroCompra());
                     Map<String, Object> modelo = new HashMap<>();
-                    modelo.put("listaVentasProductos", tienda.getListaVentasProductos());
+                    modelo.put("listaVentas", ventaServices.getListaVentas());
                     modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });
@@ -185,7 +184,7 @@ public class CarroCompraControlador extends BaseControlador {
                             System.out.println(ventaServices.getListaVentas().get(i).getId()+": "+ventaServices.getListaVentas().get(i).getListaProductos().get(j).getNombre()+"("+ventaServices.getListaVentas().get(i).getListaCantidades().get(j)+")");
                         }
                     }
-                    modelo.put("listaVentasProductos", tienda.getListaVentasProductos());
+                    modelo.put("listaVentas", ventaServices.getListaVentas());
                     modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });
