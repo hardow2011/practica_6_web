@@ -2,6 +2,7 @@ package practica_2.encapsulaciones;
 
 public class Usuario {
 
+    private int id;
     private String usuario;
     private String nombre;
     private String password;
@@ -10,10 +11,19 @@ public class Usuario {
         
     // }
 
-    public Usuario(String usuario, String nombre, String password) {
+    public Usuario(int id, String usuario, String nombre, String password) {
+        this.id = id;
         this.usuario = usuario;
         this.nombre = nombre;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsuario() {

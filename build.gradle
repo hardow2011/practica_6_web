@@ -47,4 +47,7 @@ dependencies {
     compile "org.slf4j:slf4j-simple:1.7.28"
     // base de datos h2
     compile 'com.h2database:h2:1.4.200'
+    // https://mvnrepository.com/artifact/org.jasypt/jasypt
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
+
 }

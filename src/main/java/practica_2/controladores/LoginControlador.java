@@ -2,6 +2,7 @@ package practica_2.controladores;
 
 import io.javalin.Javalin;
 import practica_2.encapsulaciones.Usuario;
+import practica_2.services.UsuarioServices;
 import practica_2.encapsulaciones.CarroCompra;
 import practica_2.util.BaseControlador;
 // import io.javalin.Javalin;
@@ -10,9 +11,13 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 public class LoginControlador extends BaseControlador {
 
     Tienda tienda = Tienda.getInstancia();
+    StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+    UsuarioServices usuarioServices = new UsuarioServices();
 
     public LoginControlador(Javalin app) {
         super(app);
@@ -59,7 +64,13 @@ public class LoginControlador extends BaseControlador {
                     String nombreUsuario = ctx.formParam("usuario");
                     String nombrePersona = ctx.formParam("nombre");
                     String password = ctx.formParam("password");
-                    tienda.agregarUsuario(nombreUsuario, nombrePersona, password);
+
+                    String encryptedPassword = passwordEncryptor.encryptPassword(password);
+                    usuarioServices.crearUsuario(nombreUsuario, nombrePersona, encryptedPassword);
+
+                    // tienda.agregarUsuario(nombreUsuario, nombrePersona, password);
+
+
                     // Map<String, Object> modelo = new HashMap<>();
                     // modelo.put("tamagnoCarritoCompra", tienda.getListaProductosConMasDeCeroCantidad().size());
                     // modelo.put("accion", "/crear-usuario");

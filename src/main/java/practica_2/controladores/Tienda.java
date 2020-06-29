@@ -82,8 +82,8 @@ public class Tienda {
     }
 
     public void agregarUsuario(String nombreUsuario, String nombrePersona, String password){
-        Usuario usuario = new Usuario(nombreUsuario, nombrePersona, password);
-        listaUsuarios.add(usuario);
+        // Usuario usuario = new Usuario(nombreUsuario, nombrePersona, password);
+        // listaUsuarios.add(usuario);
     }
 
     public void agregarProducto(String nombre, double precio){
