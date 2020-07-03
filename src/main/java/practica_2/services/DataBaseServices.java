@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class DataBaseServices {
     
     private static DataBaseServices instancia;
-    private String URL = "jdbc:h2:tcp://localhost/~/practica_3_web"; // Modo Server
+    private String URL = "jdbc:h2:tcp://localhost/~/practica_4_web"; // Modo Server
 
     private DataBaseServices() {
         registrarDriver();
