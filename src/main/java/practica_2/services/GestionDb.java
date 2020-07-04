@@ -99,7 +99,7 @@ public class GestionDb<T> {
         }
     }
 
-    public List<T> findAll() throws PersistenceException {
+    public List<T> listar() throws PersistenceException {
         EntityManager em = getEntityManager();
         try{
             CriteriaQuery<T> criteriaQuery = em.getCriteriaBuilder().createQuery(claseEntidad);

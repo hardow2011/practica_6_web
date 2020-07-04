@@ -25,7 +25,7 @@
                 <a class="nav-link" href="/carro-compra/ventas-productos">Ventas realizadas</a>
                 <a class="nav-link" href="/crud-productos/listar">Administrar productos</a>
                 <a class="nav-link" href="/crear-usuario">Crear usuario</a>
-                <#--  <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>  -->
+                <a class="nav-link" href="/carro-compra/compras">Carrito(${tamagnoCarritoCompra})</a>
             </div>
         </div>
         </nav>

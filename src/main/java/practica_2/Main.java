@@ -10,6 +10,7 @@ import java.util.List;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.staticfiles.Location;
+import practica_2.controladores.CrudControlador;
 import practica_2.entidades.Producto;
 import practica_2.services.BootStrapServices;
 import practica_2.services.ProductoServices;
@@ -23,15 +24,15 @@ public class Main {
 
         ProductoServices.getInstancia().crear(new Producto("mascarilla", 152));
 
-        // Javalin app = Javalin.create(config ->{
-        //     // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
-        //      config.addStaticFiles("/publico");
-        //     // config.registerPlugin(new RouteOverviewPlugin("/rutas"));
-        // }).start();
+        Javalin app = Javalin.create(config ->{
+            // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
+             config.addStaticFiles("/publico");
+            // config.registerPlugin(new RouteOverviewPlugin("/rutas"));
+        }).start();
 
         // new LoginControlador(app).aplicarRutas();
         // new CookiesSesionesControlador(app).aplicarRutas();
-        // new CrudControlador(app).aplicarRutas();
+        new CrudControlador(app).aplicarRutas();
         // new CarroCompraControlador(app).aplicarRutas();
 
     }
