@@ -1,6 +1,6 @@
 package practica_2.services;
 
-import practica_2.encapsulaciones.Usuario;
+import practica_2.entidades.Usuario;
 
 public class UsuarioServices extends GestionDb<Usuario>{
 
