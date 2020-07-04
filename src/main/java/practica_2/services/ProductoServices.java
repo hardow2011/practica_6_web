@@ -1,6 +1,6 @@
 package practica_2.services;
 
-import practica_2.encapsulaciones.Producto;
+import practica_2.entidades.Producto;
 
 public class ProductoServices extends GestionDb<Producto>{
 

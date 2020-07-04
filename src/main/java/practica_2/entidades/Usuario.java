@@ -3,7 +3,7 @@ package practica_2.entidades;
 import java.io.Serializable;
 
 import javax.persistence.*;
-
+@Entity
 public class Usuario implements Serializable {
 
     @Id

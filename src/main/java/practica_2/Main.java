@@ -10,10 +10,8 @@ import java.util.List;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.staticfiles.Location;
-import practica_2.controladores.*;
-import practica_2.encapsulaciones.Producto;
+import practica_2.entidades.Producto;
 import practica_2.services.BootStrapServices;
-import practica_2.services.DataBaseServices;
 import practica_2.services.ProductoServices;
 
 public class Main {

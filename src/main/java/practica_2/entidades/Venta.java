@@ -16,7 +16,7 @@ public class Venta  implements Serializable{
     private Date fechaCompra;
     private String nombreCliente;
     @OneToMany(mappedBy = "venta", fetch = FetchType.EAGER)
-    private List<ProductoVendido> listaProductos;
+    private List<ProductoVendido> listaProductos = new ArrayList<>();
     // private List<Integer> listaCantidades;
     private Double totalCompra;
 
