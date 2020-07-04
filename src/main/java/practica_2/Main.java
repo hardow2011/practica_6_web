@@ -20,29 +20,21 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         
-        //Iniciando el servicio
-        BootStrapServices.startDb();
+        //Iniciando la base de datos.
+        BootStrapServices.getInstancia().init();
 
-        //Prueba de Conexión.
-        DataBaseServices.getInstancia().testConexion();
-
-        BootStrapServices.crearTablas();
-
-        Javalin app = Javalin.create(config ->{
-            // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
-             config.addStaticFiles("/publico");
-            // config.registerPlugin(new RouteOverviewPlugin("/rutas"));
-        }).start();
-
-        new LoginControlador(app).aplicarRutas();
-        new CookiesSesionesControlador(app).aplicarRutas();
-        new CrudControlador(app).aplicarRutas();
-        new CarroCompraControlador(app).aplicarRutas();
-
-        // BootStrapServices.stopDb();
+        ProductoServices.getInstancia().crear(new Producto("mascarilla", 152));
 
         // Javalin app = Javalin.create(config ->{
-            
+        //     // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
+        //      config.addStaticFiles("/publico");
+        //     // config.registerPlugin(new RouteOverviewPlugin("/rutas"));
         // }).start();
+
+        // new LoginControlador(app).aplicarRutas();
+        // new CookiesSesionesControlador(app).aplicarRutas();
+        // new CrudControlador(app).aplicarRutas();
+        // new CarroCompraControlador(app).aplicarRutas();
+
     }
 }
