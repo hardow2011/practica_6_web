@@ -112,17 +112,19 @@ public class CarroCompraControlador extends BaseControlador {
                     // De otro modo
                     }
                     else{
+                        System.out.println("\n\nExiiiiste\n\n");
                         // System.out.println("No era nulo");
                         for(int i = 0; i < listaCantidades.size(); i++){
                             if(listaCantidades.get(i) != 0){
                                 if(carroCompra.size() == 0){
+                                    System.out.println(carroCompra.size());
                                     ProductoVendido productoEnCarrito = new ProductoVendido(listaProductos.get(i).getNombre(), listaProductos.get(i).getPrecio(), listaCantidades.get(i), listaProductos.get(i).getId());
                                     carroCompra.add(productoEnCarrito);
                                     continue;
                                 }
                                 for(int j = 0; j < carroCompra.size(); j++){
                                     // Le sumo la nueva cantidad a los productos ya existentes
-                                    if(listaProductos.get(i).getId() == carroCompra.get(j).getId()){
+                                    if(listaProductos.get(i).getId() == carroCompra.get(j).getIdReferenciado()){
                                         ProductoVendido productoEnCarrito = carroCompra.get(j);
                                         productoEnCarrito.setCantidad(productoEnCarrito.getCantidad()+listaCantidades.get(i));
                                         carroCompra.set(j, productoEnCarrito);
