@@ -15,7 +15,7 @@
                 <form class="form-horizontal" enctype="application/x-www-form-urlencoded" action="/carro-compra/procesar-compra" method="post">
                     <div class="form-group form-inline ten-percent-padding-left">
                         <label for="nombreClienteInput">Nombre del cliente</label>
-                        <input type="text" class="form-control" id="nombreClienteInput" name="nombreCliente"/><br>
+                        <input type="text" class="form-control" id="nombreClienteInput" name="nombreCliente" required/><br>
                     </div>
             <#--  </div>  -->
         </div>
@@ -27,18 +27,18 @@
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Total</th>
-                    <th>Acción</th>
+                    <#--  <th>Acción</th>  -->
                 </tr>   
             </thead>
-            <tbody>
+            <tbody> 
                 <#if carroCompra??>
-                    <#list carroCompra.listaProductos as producto>
+                    <#list carroCompra as productoEnCarrito>
                     <tr>
-                        <td>${producto.nombre}</td>
-                        <td>${producto.precio}</td>
-                        <td>${carroCompra.listaCantidades[producto?index]}</td>
-                        <td>${carroCompra.listaCantidades[producto?index] * producto.precio}</td>
-                        <td><a href="/carro-compra/eliminar/${producto.id}" class="btn btn-danger">Eliminar</a></td>
+                        <td>${productoEnCarrito.nombre}</td>
+                        <td>${productoEnCarrito.precio}</td>
+                        <td>${productoEnCarrito.cantidad}</td>
+                        <td>${productoEnCarrito.cantidad * productoEnCarrito.precio}</td>
+                        <td><a href="/carro-compra/eliminar/${productoEnCarrito.id}" class="btn btn-danger">Eliminar</a></td>
                     </tr>
                     </#list>
                 </#if>

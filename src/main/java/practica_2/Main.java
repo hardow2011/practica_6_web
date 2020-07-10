@@ -10,7 +10,7 @@ import java.util.List;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.staticfiles.Location;
-import practica_2.controladores.CrudControlador;
+import practica_2.controladores.*;
 import practica_2.entidades.Producto;
 import practica_2.services.BootStrapServices;
 import practica_2.services.ProductoServices;
@@ -23,6 +23,11 @@ public class Main {
         BootStrapServices.getInstancia().init();
 
         ProductoServices.getInstancia().crear(new Producto("mascarilla", 152));
+        ProductoServices.getInstancia().crear(new Producto("ropa", 874));
+        ProductoServices.getInstancia().crear(new Producto("pantalones", 7400));
+        ProductoServices.getInstancia().crear(new Producto("vaso", 25));
+        ProductoServices.getInstancia().crear(new Producto("uber", 374));
+        ProductoServices.getInstancia().crear(new Producto("sábanas", 9500));
 
         Javalin app = Javalin.create(config ->{
             // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
@@ -33,7 +38,7 @@ public class Main {
         // new LoginControlador(app).aplicarRutas();
         // new CookiesSesionesControlador(app).aplicarRutas();
         new CrudControlador(app).aplicarRutas();
-        // new CarroCompraControlador(app).aplicarRutas();
+        new CarroCompraControlador(app).aplicarRutas();
 
     }
 }

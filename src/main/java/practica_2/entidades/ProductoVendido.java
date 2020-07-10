@@ -35,10 +35,6 @@ public class ProductoVendido implements Serializable {
         this.nombre = nombre;
     }
 
-    public ProductoVendido(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
     public int getId() {
         return id;
     }
@@ -53,6 +49,13 @@ public class ProductoVendido implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public ProductoVendido(int id, String nombre, double precio, int cantidad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = cantidad;
     }
 
 }
