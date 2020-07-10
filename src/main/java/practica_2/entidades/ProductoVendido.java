@@ -13,6 +13,8 @@ public class ProductoVendido implements Serializable {
     private String nombre;
     private double precio;
     private int cantidad;
+    @Transient
+    private Integer idReferenciado;
     @ManyToOne
     private Venta venta;
 
@@ -51,11 +53,34 @@ public class ProductoVendido implements Serializable {
         this.id = id;
     }
 
-    public ProductoVendido(int id, String nombre, double precio, int cantidad) {
-        this.id = id;
+    // public ProductoVendido(int id, String nombre, double precio, int cantidad) {
+    //     this.id = id;
+    //     this.nombre = nombre;
+    //     this.precio = precio;
+    //     this.cantidad = cantidad;
+    // }
+
+    public ProductoVendido(String nombre, double precio, int cantidad, int idReferenciado) {
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
+        this.idReferenciado = idReferenciado;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
+    }
+
+    public Integer getIdReferenciado() {
+        return idReferenciado;
+    }
+
+    public void setIdReferenciado(Integer idReferenciado) {
+        this.idReferenciado = idReferenciado;
     }
 
 }

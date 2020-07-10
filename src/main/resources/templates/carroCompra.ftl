@@ -38,7 +38,7 @@
                         <td>${productoEnCarrito.precio}</td>
                         <td>${productoEnCarrito.cantidad}</td>
                         <td>${productoEnCarrito.cantidad * productoEnCarrito.precio}</td>
-                        <td><a href="/carro-compra/eliminar/${productoEnCarrito.id}" class="btn btn-danger">Eliminar</a></td>
+                        <td><a href="/carro-compra/eliminar/${productoEnCarrito.idReferenciado}" class="btn btn-danger">Eliminar</a></td>
                     </tr>
                     </#list>
                 </#if>

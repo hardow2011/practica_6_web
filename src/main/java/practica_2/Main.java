@@ -12,8 +12,10 @@ import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.staticfiles.Location;
 import practica_2.controladores.*;
 import practica_2.entidades.Producto;
+import practica_2.entidades.ProductoVendido;
 import practica_2.services.BootStrapServices;
 import practica_2.services.ProductoServices;
+import practica_2.services.ProductoVendidoServices;
 
 public class Main {
 
@@ -28,6 +30,7 @@ public class Main {
         ProductoServices.getInstancia().crear(new Producto("vaso", 25));
         ProductoServices.getInstancia().crear(new Producto("uber", 374));
         ProductoServices.getInstancia().crear(new Producto("sábanas", 9500));
+        // ProductoVendidoServices.getInstancia().crear(new ProductoVendido("Cereales", 78.2, 4));
 
         Javalin app = Javalin.create(config ->{
             // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.

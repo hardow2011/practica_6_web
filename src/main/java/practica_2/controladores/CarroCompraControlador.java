@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 import practica_2.util.BaseControlador;
 import practica_2.entidades.*;
 import practica_2.services.ProductoServices;
+import practica_2.services.ProductoVendidoServices;
 import practica_2.services.VentaServices;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -57,29 +58,34 @@ public class CarroCompraControlador extends BaseControlador {
                     ctx.render("templates/vistaTienda.ftl", modelo);
                 });
 
-                // get("/compras", ctx -> {
+                get("/compras", ctx -> {
 
 
-                //     // ctx.result(Arrays.toString(listaCantidades.toArray()));
-                //     Map<String, Object> modelo = new HashMap<>();
-                //     modelo.put("tituloVentana", "Titulo Plantilla");
-                //     modelo.put("titulo", "Titulo Plantilla");
-                //     modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
-                //     if(ctx.sessionAttribute("carroCompra") != null){
-                //         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
-                //     }else{
-                //         modelo.put("tamagnoCarritoCompra", 0);
-                //     }
-                //     if(ctx.sessionAttribute("carroCompra") != null){
-                //         modelo.put("total", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getTotalCarrito());
-                //     }
-                //     if(ctx.sessionAttribute("usuario") != null){
-                //         modelo.put("conectado", "true");
-                //         modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                //     }
-                //     ctx.render("templates/carroCompra.ftl", modelo);
+                    // ctx.result(Arrays.toString(listaCantidades.toArray()));
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("tituloVentana", "Titulo Plantilla");
+                    modelo.put("titulo", "Titulo Plantilla");
+                    modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
 
-                // });
+                        double total = 0;
+                        for (ProductoVendido productoEnCarrito : ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra"))) {
+                            total += productoEnCarrito.getCantidad() * productoEnCarrito.getPrecio();
+                        }
+                        modelo.put("total", total);
+
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
+                        modelo.put("nombreUsuario", "LecheDeSoya");
+                    }
+                    ctx.render("templates/carroCompra.ftl", modelo);
+
+                });
 
                 post("/compras", ctx -> {
 
@@ -99,7 +105,7 @@ public class CarroCompraControlador extends BaseControlador {
                         // Agrego todos los productos que tuvieron más de cero cantidades a un carro de compras
                         for(int i = 0; i < listaCantidades.size(); i++){
                             if(listaCantidades.get(i) != 0){
-                                ProductoVendido productoEnCarrito = new ProductoVendido(listaProductos.get(i).getId(), listaProductos.get(i).getNombre(), listaProductos.get(i).getPrecio(), listaCantidades.get(i));
+                                ProductoVendido productoEnCarrito = new ProductoVendido(listaProductos.get(i).getNombre(), listaProductos.get(i).getPrecio(), listaCantidades.get(i), listaProductos.get(i).getId());
                                 carroCompra.add(productoEnCarrito);
                             }
                         }
@@ -110,7 +116,7 @@ public class CarroCompraControlador extends BaseControlador {
                         for(int i = 0; i < listaCantidades.size(); i++){
                             if(listaCantidades.get(i) != 0){
                                 if(carroCompra.size() == 0){
-                                    ProductoVendido productoEnCarrito = new ProductoVendido(listaProductos.get(i).getId(), listaProductos.get(i).getNombre(), listaProductos.get(i).getPrecio(), listaCantidades.get(i));
+                                    ProductoVendido productoEnCarrito = new ProductoVendido(listaProductos.get(i).getNombre(), listaProductos.get(i).getPrecio(), listaCantidades.get(i), listaProductos.get(i).getId());
                                     carroCompra.add(productoEnCarrito);
                                     continue;
                                 }
@@ -124,7 +130,7 @@ public class CarroCompraControlador extends BaseControlador {
                                     }
                                     // O si el producto no estaba en el carro de compras, lo agrego
                                     else if(j ==  carroCompra.size()-1){
-                                        ProductoVendido productoEnCarrito = new ProductoVendido(listaProductos.get(i).getId(), listaProductos.get(i).getNombre(), listaProductos.get(i).getPrecio(), listaCantidades.get(i));
+                                        ProductoVendido productoEnCarrito = new ProductoVendido(listaProductos.get(i).getNombre(), listaProductos.get(i).getPrecio(), listaCantidades.get(i), listaProductos.get(i).getId());
                                         carroCompra.add(productoEnCarrito);
                                         break;
                                     }
@@ -144,15 +150,13 @@ public class CarroCompraControlador extends BaseControlador {
                     modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
                     if(ctx.sessionAttribute("carroCompra") != null){
                         modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
-                    }else{
-                        modelo.put("tamagnoCarritoCompra", 0);
-                    }
-                    if(ctx.sessionAttribute("carroCompra") != null){
                         double total = 0;
                         for (ProductoVendido productoEnCarrito : ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra"))) {
                             total += productoEnCarrito.getCantidad() * productoEnCarrito.getPrecio();
                         }
                         modelo.put("total", total);
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
@@ -172,7 +176,7 @@ public class CarroCompraControlador extends BaseControlador {
                     List<ProductoVendido> nuevoCarroCompra = new ArrayList<>();
 
                     for(int i = 0; i < carroCompraActual.size(); i++){
-                        if(carroCompraActual.get(i).getId() != idProducto){
+                        if(carroCompraActual.get(i).getIdReferenciado() != idProducto){
                             nuevoCarroCompra.add(carroCompraActual.get(i));
                         }
                     }
@@ -187,14 +191,14 @@ public class CarroCompraControlador extends BaseControlador {
                     modelo.put("carroCompra", ctx.sessionAttribute("carroCompra"));
                     if(ctx.sessionAttribute("carroCompra") != null){
                         modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
+                        double total = 0;
+                        for (ProductoVendido productoEnCarrito : ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra"))) {
+                            total += productoEnCarrito.getCantidad() * productoEnCarrito.getPrecio();
+                        }
+                        modelo.put("total", total);
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
-                    double total = 0;
-                    for (ProductoVendido productoEnCarrito : ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra"))) {
-                        total += productoEnCarrito.getCantidad() * productoEnCarrito.getPrecio();
-                    }
-                    modelo.put("total", total);
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
                         // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
@@ -203,44 +207,57 @@ public class CarroCompraControlador extends BaseControlador {
                     ctx.render("templates/carroCompra.ftl", modelo);
                 });
 
-                // post("/procesar-compra", ctx -> {
-                //     String nombreCliente = ctx.formParam("nombreCliente");
-                //     ventaServices.crearVenta(nombreCliente, ((CarroCompra) ctx.sessionAttribute("carroCompra")));
-                //     // Vaciar el carro de compras después de procesar la compra.
-                //     ctx.req.getSession().setAttribute("carroCompra", new CarroCompra());
-                //     Map<String, Object> modelo = new HashMap<>();
-                //     modelo.put("listaVentas", ventaServices.getListaVentas());
-                //     if(ctx.sessionAttribute("carroCompra") != null){
-                //         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
-                //     }else{
-                //         modelo.put("tamagnoCarritoCompra", 0);
-                //     }
-                //     if(ctx.sessionAttribute("usuario") != null){
-                //         modelo.put("conectado", "true");
-                //         modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                //     }
-                //     ctx.render("templates/ventasProductos.ftl", modelo);
-                // });
+                post("/procesar-compra", ctx -> {
+                    String nombreCliente = ctx.formParam("nombreCliente");
 
-                // get("ventas-productos", ctx -> {
-                //     Map<String, Object> modelo = new HashMap<>();
-                //     // for(int i = 0; i < ventaServices.getListaVentas().size(); i++){
-                //     //     for(int j = 0; j < ventaServices.getListaVentas().get(i).getListaProductos().size(); j++){
-                //     //         System.out.println(ventaServices.getListaVentas().get(i).getId()+": "+ventaServices.getListaVentas().get(i).getListaProductos().get(j).getNombre()+"("+ventaServices.getListaVentas().get(i).getListaCantidades().get(j)+")");
-                //     //     }
-                //     // }
-                //     modelo.put("listaVentas", ventaServices.getListaVentas());
-                //     if(ctx.sessionAttribute("carroCompra") != null){
-                //         modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
-                //     }else{
-                //         modelo.put("tamagnoCarritoCompra", 0);
-                //     }
-                //     if(ctx.sessionAttribute("usuario") != null){
-                //         modelo.put("conectado", "true");
-                //         modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                //     }
-                //     ctx.render("templates/ventasProductos.ftl", modelo);
-                // });
+                    double total = 0;
+                    for (ProductoVendido productoEnCarrito : ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra"))) {
+                        total += productoEnCarrito.getCantidad() * productoEnCarrito.getPrecio();
+                    }
+
+                    Venta venta = new Venta(java.sql.Date.valueOf(java.time.LocalDate.now()), nombreCliente, total);
+                    VentaServices.getInstancia().crear(venta);
+
+                    for (ProductoVendido productoEnCarrito : ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra"))) {
+                        productoEnCarrito.setVenta(venta);
+                        ProductoVendidoServices.getInstancia().crear(productoEnCarrito);
+                    }
+
+                    // venta.setListaProductos(((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")));
+
+                    // Vaciar el carro de compras después de procesar la compra.
+                    ctx.req.getSession().setAttribute("carroCompra", new ArrayList<ProductoVendido>());
+                    Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("listaVentas", VentaServices.getInstancia().listar());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
+                        modelo.put("nombreUsuario", "LecheDeSoya");
+                    }
+                    ctx.render("templates/ventasProductos.ftl", modelo);
+                });
+
+                get("ventas-productos", ctx -> {
+                    Map<String, Object> modelo = new HashMap<>();
+
+                    modelo.put("listaVentas", VentaServices.getInstancia().listar());
+                    if(ctx.sessionAttribute("carroCompra") != null){
+                        modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
+                    }else{
+                        modelo.put("tamagnoCarritoCompra", 0);
+                    }
+                    if(ctx.sessionAttribute("usuario") != null){
+                        modelo.put("conectado", "true");
+                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
+                        modelo.put("nombreUsuario", "LecheDeSoya");
+                    }
+                    ctx.render("templates/ventasProductos.ftl", modelo);
+                });
 
             });
         });

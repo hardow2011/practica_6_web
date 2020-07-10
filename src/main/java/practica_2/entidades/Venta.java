@@ -17,7 +17,6 @@ public class Venta  implements Serializable{
     private String nombreCliente;
     @OneToMany(mappedBy = "venta", fetch = FetchType.EAGER)
     private List<ProductoVendido> listaProductos = new ArrayList<>();
-    // private List<Integer> listaCantidades;
     private Double totalCompra;
 
     public Venta() {
@@ -45,13 +44,13 @@ public class Venta  implements Serializable{
         this.totalCompra = totalCompra;
     }
 
-    // public List<ProductoVendido> getListaProductos() {
-    //     return listaProductos;
-    // }
+    public List<ProductoVendido> getListaProductos() {
+        return listaProductos;
+    }
 
-    // public void setListaProductos(List<ProductoVendido> listaProductos) {
-    //     this.listaProductos = listaProductos;
-    // }
+    public void setListaProductos(List<ProductoVendido> listaProductos) {
+        this.listaProductos = listaProductos;
+    }
 
     public String getNombreCliente() {
         return nombreCliente;

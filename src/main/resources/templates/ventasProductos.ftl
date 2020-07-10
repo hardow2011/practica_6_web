@@ -19,12 +19,12 @@
                     </tr>   
                 </thead>
                 <tbody>
-                <#list venta.listaProductos as producto>
+                <#list venta.listaProductos as productoVendido>
                     <tr>
-                        <td>${producto.nombre}</td>
-                        <td>${producto.precio}</td>
-                        <td>${venta.listaCantidades[producto?index]}</td>
-                        <td>${venta.listaCantidades[producto?index] * producto.precio}</td>
+                        <td>${productoVendido.nombre}</td>
+                        <td>${productoVendido.precio}</td>
+                        <td>${productoVendido.cantidad}</td>
+                        <td>${productoVendido.precio * productoVendido.cantidad}</td>
                         <#--  <td>${venta.fechaCompra?string('dd/MM/yyyy')}</td>
                         <td>${venta.totalCompra}</td>  -->
                     </tr>
