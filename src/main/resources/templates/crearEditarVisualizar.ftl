@@ -14,13 +14,18 @@
                         <label for="nombreInput">Nombre</label>
                         <input readonly="true" type="text" class="form-control" value="${producto.nombre}"  id="nombreInput" name="nombreProducto"/><br>
                         <label for="descripcionInput">Descripción</label>
-                        <input readonly="true" type="text" class="form-control" value="${producto.descripcion}" id="descripcionInput" name="descripcionProducto"/><br>
+                        <input readonly="true" type="text" class="form-control" value="${(producto.descripcion)!}" id="descripcionInput" name="descripcionProducto"/><br>
                         <label for="precioInput">Precio</label>
                         <input readonly="true" type="number" step="0.01" class="form-control" value="${producto.precio?string['0']}" id="precioInput" name="precioProducto" disables/><br>
-                        <h1>Fotos</h1>
-                        <#foreach foto in listaFotos>
-                            <img src="data:${foto.mimeType};base64,${foto.fotoBase64}" class="imagen-producto" alt="Foto enviada">
-                        </#foreach>
+                        <#if listaFotos??>
+                            <h1>Fotos</h1>
+                            <#foreach foto in listaFotos>
+                                <img src="data:${foto.mimeType};base64,${foto.fotoBase64}" class="imagen-producto" alt="Foto enviada">
+                            </#foreach>
+                        <#else>
+                            <h1>No hay fotos</h1>
+                        </#if>
+
                     <#else>
                         <input type="hidden" value="${producto.id}" name="idProducto"/>
                         <label for="nombreInput">Nombre</label>
@@ -34,7 +39,7 @@
                 <label for="precioInput">Precio</label>
                 <input type="number" step="0.01" name="precioProducto"  class="form-control" id="precioInput" required/><br>
                 <label for="descripcionInput">Descripción</label>
-                <input type="text" name="descripcionProducto" class="form-control" id="descripcionInput" required/><br>
+                <input type="text" name="descripcionProducto" class="form-control" id="descripcionInput"/><br>
                 <label for="fotoInput">Fotos</label>
                 <input class="form-control" id="fotoInput" type="file" name="fotoProducto" multiple required>
                 </#if>

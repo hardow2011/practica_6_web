@@ -20,6 +20,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>Visualizar</th>
                         <th>Nombre</th>
                         <th>Precio</th>
                         <th>Cantidad</th>
@@ -28,6 +29,7 @@
                 <tbody>
                     <#list listaCantidades as cantidad>
                     <tr>
+                        <td><a href="/crud-productos/visualizar/${listaProductos[cantidad?index].id}" class="btn btn-info">Visualizar</a></td>
                         <td>${listaProductos[cantidad?index].nombre}</td>
                         <td>${listaProductos[cantidad?index].precio}</td>
                         <td><input type="number" value="${cantidad}" name="listaCantidades" required/><br></td>

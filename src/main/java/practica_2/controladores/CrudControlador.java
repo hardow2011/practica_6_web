@@ -30,9 +30,12 @@ public class CrudControlador extends BaseControlador {
             path("/crud-productos", () -> {
 
                 before(ctx -> {
-                    Usuario usuario = ctx.sessionAttribute("usuario");
-                    if(usuario == null){
-                        ctx.redirect("/login.html");
+                    // Si la ruta es visualizar, no restringir acceso
+                    if(!ctx.path().contains("/crud-productos/visualizar/")){
+                        Usuario usuario = ctx.sessionAttribute("usuario");
+                        if(usuario == null){
+                            ctx.redirect("/login.html");
+                        }
                     }
                 });
                 
