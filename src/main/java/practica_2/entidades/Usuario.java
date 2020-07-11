@@ -49,10 +49,12 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
+    // Los usuarios nuevos nunca son admin, a menos que se especifique lo contrario.
     public Usuario(String nombreUsuario, String nombrePersona, String password) {
         this.setNombreUsuario(nombreUsuario);
         this.setNombrePersona(nombrePersona);
         this.setPassword(password);
+        this.admin = false;
     }
 
     public boolean getAdmin() {

@@ -82,6 +82,11 @@ public class LoginControlador extends BaseControlador {
                     String encryptedPassword = passwordEncryptor.encryptPassword(password);
 
                     Usuario usuario = new Usuario(nombreUsuario, nombrePersona, encryptedPassword);
+
+                    if(Objects.nonNull(ctx.formParam("esAdmin"))){
+                        usuario.setAdmin(true);
+                    }
+
                     UsuarioServices.getInstancia().crear(usuario);
 
                     // tienda.agregarUsuario(nombreUsuario, nombrePersona, password);

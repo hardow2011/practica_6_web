@@ -16,6 +16,8 @@
             <input type="text" class="form-control" id="nombreInput" name="nombre" required/><br>
             <label for="passwordInput">Contraseña</label>
             <input type="password" class="form-control" id="passwordInput" name="password" required/><br/>
+            <input type="checkbox" id="esAdmin" name="esAdmin" value="true">
+            <label for="esAdmin">Es admin?</label><br>
             <input type="submit" class="btn btn-success confirmar" value="Crear usuario"/>
           </div>
         </form>
