@@ -49,6 +49,7 @@ public class CookiesSesionesControlador extends BaseControlador {
             List<Usuario> listaUsuarios = UsuarioServices.getInstancia().listar();
 
             for (int i = 0; i < listaUsuarios.size(); i++) {
+                System.out.println(listaUsuarios.get(i).getNombreUsuario() + " " +listaUsuarios.get(i).getPassword());
                 if(listaUsuarios.get(i).getNombreUsuario().equals(nombreUsuario) && passwordEncryptor.checkPassword(password, listaUsuarios.get(i).getPassword())){
                     // System.out.println((tienda.getListaUsuarios().get(i).getUsuario()+" "+texto_usuario+" | "+tienda.getListaUsuarios().get(i).getPassword()+" "+password));
                     // System.out.println(tienda.getListaUsuarios().get(i).getUsuario().equals(texto_usuario) && tienda.getListaUsuarios().get(i).getPassword().equals(password));

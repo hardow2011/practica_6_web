@@ -17,7 +17,7 @@
                 <#if !conectado??>
                     <a class="nav-link" href="/login">Login</a>
                 <#else>
-                    <#--  <a class="nav-link" href="/logout">Logout (${nombreUsuario})</a>  -->
+                    <a class="nav-link" href="/logout">Logout (${nombreUsuario})</a>
                 </#if>
             </div>
             <div style="display:flex; justify-content:flex-end; padding:0;">

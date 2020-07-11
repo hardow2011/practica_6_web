@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.h2.tools.Server;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 
 public class BootStrapServices {
 
