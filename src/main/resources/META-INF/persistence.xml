@@ -9,6 +9,7 @@
         <class>practica_2.entidades.Usuario</class>
         <class>practica_2.entidades.Venta</class>
         <class>practica_2.entidades.ProductoVendido</class>
+        <class>practica_2.entidades.Foto</class>
         <properties>
             <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />-->
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/practica_4_web" />

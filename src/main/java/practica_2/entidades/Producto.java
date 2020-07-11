@@ -1,6 +1,8 @@
 package practica_2.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -11,7 +13,10 @@ public class Producto  implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY) //crear el ID de forma automática
     private int id;
     private String nombre;
+    private String descripcion;
     private double precio;
+    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER)
+    private List<Foto> listaFotos = new ArrayList<>();
 
     public Producto(){
 
@@ -32,9 +37,10 @@ public class Producto  implements Serializable{
         // }
     
         // Para crear producto
-        public Producto(String nombre, double precio){
+        public Producto(String nombre, String descripcion, double precio){
             this.nombre = nombre;
             this.precio = precio;
+            this.descripcion = descripcion;
         }
     
         // // Para recuperar productos de la BD
@@ -64,5 +70,21 @@ public class Producto  implements Serializable{
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public List<Foto> getListaFotos() {
+        return listaFotos;
+    }
+
+    public void setListaFotos(List<Foto> listaFotos) {
+        this.listaFotos = listaFotos;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

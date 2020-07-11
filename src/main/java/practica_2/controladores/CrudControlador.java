@@ -2,12 +2,16 @@ package practica_2.controladores;
 
 import io.javalin.Javalin;
 import practica_2.entidades.*;
+import practica_2.services.FotoServices;
 import practica_2.services.ProductoServices;
 import practica_2.util.BaseControlador;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 import java.lang.ProcessBuilder.Redirect;
+
+import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,12 +74,27 @@ public class CrudControlador extends BaseControlador {
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
 
-                post("/crear", ctx -> {
+                post("/crear", ctx -> { 
                     String nombreProducto = ctx.formParam("nombreProducto");
+                    String descripcionProducto = ctx.formParam("descripcionProducto");
                     double precioProducto = ctx.formParam("precioProducto", Double.class).get();
+                    Producto producto = new Producto(nombreProducto, descripcionProducto, precioProducto);
 
-                    // tienda.agregarProducto(nombreProducto, precioProducto);
-                    ProductoServices.getInstancia().crear(new Producto(nombreProducto, precioProducto));
+                    ProductoServices.getInstancia().crear(producto);
+                    
+                    ctx.uploadedFiles("fotoProducto").forEach(uploadedFile -> {
+                        try {
+                            byte[] bytes = uploadedFile.getContent().readAllBytes();
+                            String encodedString = Base64.getEncoder().encodeToString(bytes);
+                            Foto foto = new Foto(uploadedFile.getFilename(), uploadedFile.getContentType(), encodedString, producto);
+                            FotoServices.getInstancia().crear(foto);
+                            System.out.println("\n\nHaaaaaahaha\n\n");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    
+
                     ctx.redirect("/crud-productos");
                 });
 
@@ -120,8 +139,12 @@ public class CrudControlador extends BaseControlador {
                 get("visualizar/:idProducto", ctx ->{
                     // Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
                     Producto producto = ProductoServices.getInstancia().find(Integer.parseInt(ctx.pathParam("idProducto")));
+
+                    List<Foto> listaFotos = producto.getListaFotos();
+
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("producto", producto);
+                    modelo.put("listaFotos", listaFotos);
                     modelo.put("accion", "");
                     modelo.put("titulo", "Visualizar");
                     modelo.put("visualizar", true);
