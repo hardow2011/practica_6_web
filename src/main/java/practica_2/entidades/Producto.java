@@ -15,8 +15,10 @@ public class Producto  implements Serializable{
     private String nombre;
     private String descripcion;
     private double precio;
-    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
     private List<Foto> listaFotos = new ArrayList<>();
+    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
+    private List<Comentario> listaComentarios = new ArrayList<>();
 
     public Producto(){
 
@@ -86,5 +88,9 @@ public class Producto  implements Serializable{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<Comentario> getListaComentarios() {
+        return listaComentarios;
     }
 }

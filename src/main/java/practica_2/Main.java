@@ -41,8 +41,10 @@ public class Main {
 
         Javalin app = Javalin.create(config -> {
             if (UsuarioServices.getInstancia().listar().size() == 0) {
+                Usuario primerAdmin = new Usuario("admin", "admin", passwordEncryptor.encryptPassword("admin"));
+                primerAdmin.setAdmin(true);
                 UsuarioServices.getInstancia()
-                        .crear(new Usuario("admin", "admin", passwordEncryptor.encryptPassword("admin")));
+                        .crear(primerAdmin);
             }
             // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
              config.addStaticFiles("/publico");

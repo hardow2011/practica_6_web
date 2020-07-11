@@ -12,6 +12,7 @@ public class Usuario implements Serializable {
     private String nombreUsuario;
     private String nombrePersona;
     private String password;
+    private boolean admin;
 
     public Usuario() {
     }
@@ -52,6 +53,14 @@ public class Usuario implements Serializable {
         this.setNombreUsuario(nombreUsuario);
         this.setNombrePersona(nombrePersona);
         this.setPassword(password);
+    }
+
+    public boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
     
 }
