@@ -2,7 +2,9 @@ package practica_2.entidades;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -15,10 +17,11 @@ public class Producto  implements Serializable{
     private String nombre;
     private String descripcion;
     private double precio;
-    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<Foto> listaFotos = new ArrayList<>();
-    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<Comentario> listaComentarios = new ArrayList<>();
+    // Cambiar List a Set porque al parecer dos Lists no pueden ser FetchType.Eager a la vez
+    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER)
+    private Set<Foto> listaFotos = new HashSet<>();
+    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER)
+    private Set<Comentario> listaComentarios = new HashSet<>();
 
     public Producto(){
 
@@ -74,11 +77,11 @@ public class Producto  implements Serializable{
         this.precio = precio;
     }
 
-    public List<Foto> getListaFotos() {
+    public Set<Foto> getListaFotos() {
         return listaFotos;
     }
 
-    public void setListaFotos(List<Foto> listaFotos) {
+    public void setListaFotos(Set<Foto> listaFotos) {
         this.listaFotos = listaFotos;
     }
 
@@ -90,7 +93,7 @@ public class Producto  implements Serializable{
         this.descripcion = descripcion;
     }
 
-    public List<Comentario> getListaComentarios() {
+    public Set<Comentario> getListaComentarios() {
         return listaComentarios;
     }
 }

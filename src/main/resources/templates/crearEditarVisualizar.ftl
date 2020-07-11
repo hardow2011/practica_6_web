@@ -25,7 +25,31 @@
                         <#else>
                             <h1>No hay fotos</h1>
                         </#if>
-
+                        <#if usuario??>
+                            <form enctype="application/x-www-form-urlencoded" action=${accion} method="post">
+                                <div class="form-group">
+                                <label for="comentarioInput">Agregar comentario</label>
+                                <input type="text" class="form-control"  id="comentarioInput" name="comentarioProducto"/><br>
+                                <input type="hidden" value="${producto.id}" name="idProducto"/>
+                                <input type="submit" class="btn btn-success confirmar" value="Publicar comentario"/>
+                                </div>
+                            </form>
+                        <#else>
+                            <a class="nav-link" href="/login">Iniciar sesión para comentar</a>
+                        </#if>
+                        <#if listaComentarios??>
+                            <h1>Comentarios</h1>
+                            <#foreach comentario in listaComentarios>
+                                <#if usuario??>
+                                    <#if usuario.admin>
+                                        <a class="btn btn-danger" href="/crud-productos/eliminar-comentario/${comentario.id}/${producto.id}">Eliminar</a>
+                                    </#if>
+                                </#if>
+                                <input readonly="true" type="text" class="form-control" value="${comentario.texto}"  id="comentario" name="comentario"/><br>
+                            </#foreach>
+                        <#else>
+                        <h1>No hay comentarios</h1>
+                        </#if>
                     <#else>
                         <input type="hidden" value="${producto.id}" name="idProducto"/>
                         <label for="nombreInput">Nombre</label>
@@ -46,8 +70,8 @@
             </div>
             <#if !visualizar ??>
                 <input type="submit" class="btn btn-success crear" value="Enviar"/>
-            <#else>
-                <a href="/crud-productos/listar" class="btn btn-primary regresar">Regresar</a>
+            <#--  <#else>
+                <a href="/crud-productos/listar" class="btn btn-primary regresar">Regresar</a>  -->
             </#if>
         </form>
     </div> 

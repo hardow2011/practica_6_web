@@ -10,7 +10,7 @@ import org.eclipse.jetty.util.thread.strategy.ProduceConsume;
 public class Foto implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String nombre;
     private String mimeType;
     @Lob
@@ -34,11 +34,11 @@ public class Foto implements Serializable{
         this.producto = producto;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

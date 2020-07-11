@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Comentario implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     String texto;
     @ManyToOne
     Producto producto;
@@ -20,7 +20,7 @@ public class Comentario implements Serializable{
         this.texto = texto;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -30,6 +30,14 @@ public class Comentario implements Serializable{
 
     public void setTexto(String texto) {
         this.texto = texto;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
 }

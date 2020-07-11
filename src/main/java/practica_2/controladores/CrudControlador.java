@@ -2,6 +2,7 @@ package practica_2.controladores;
 
 import io.javalin.Javalin;
 import practica_2.entidades.*;
+import practica_2.services.ComentarioServices;
 import practica_2.services.FotoServices;
 import practica_2.services.ProductoServices;
 import practica_2.util.BaseControlador;
@@ -15,6 +16,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class CrudControlador extends BaseControlador {
@@ -35,6 +37,9 @@ public class CrudControlador extends BaseControlador {
                         Usuario usuario = ctx.sessionAttribute("usuario");
                         if(usuario == null){
                             ctx.redirect("/login.html");
+                        }
+                        else if(!usuario.getAdmin()){
+                            ctx.redirect("/carro-compra/vista-tienda");
                         }
                     }
                 });
@@ -143,12 +148,16 @@ public class CrudControlador extends BaseControlador {
                     // Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
                     Producto producto = ProductoServices.getInstancia().find(Integer.parseInt(ctx.pathParam("idProducto")));
 
-                    List<Foto> listaFotos = producto.getListaFotos();
+                    Set<Foto> listaFotos = producto.getListaFotos();
+                    Set<Comentario> listaComentarios = producto.getListaComentarios();
 
                     Map<String, Object> modelo = new HashMap<>();
+                    // modelo.put("usuario", ctx.sessionAttribute("usuario"));
                     modelo.put("producto", producto);
+                    modelo.put("usuario", ((Usuario) ctx.sessionAttribute("usuario")));
                     modelo.put("listaFotos", listaFotos);
-                    modelo.put("accion", "");
+                    modelo.put("listaComentarios", listaComentarios);
+                    modelo.put("accion", "/crud-productos/publicar-comentario");
                     modelo.put("titulo", "Visualizar");
                     modelo.put("visualizar", true);
                     if(ctx.sessionAttribute("carroCompra") != null){
@@ -162,6 +171,22 @@ public class CrudControlador extends BaseControlador {
                     }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
 
+                });
+
+                get("/eliminar-comentario/:idComentario/:idProducto", ctx -> {
+                    int idComentario = ctx.pathParam("idComentario", Integer.class).get();
+                    int idProducto = ctx.pathParam("idProducto", Integer.class).get();
+
+                    ComentarioServices.getInstancia().eliminar(idComentario);
+                    ctx.redirect("/crud-productos/visualizar/"+idProducto);
+                });
+
+                post("/publicar-comentario", ctx -> {
+                    Producto producto = ProductoServices.getInstancia().find(Integer.parseInt(ctx.formParam("idProducto")));
+                    Comentario comentario = new Comentario(ctx.formParam("comentarioProducto"));
+                    comentario.setProducto(producto);
+                    ComentarioServices.getInstancia().crear(comentario);
+                    ctx.redirect("/crud-productos/visualizar/"+ctx.formParam("idProducto"));
                 });
 
                 get("/eliminar/:idProducto", ctx -> {

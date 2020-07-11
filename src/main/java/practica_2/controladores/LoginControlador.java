@@ -53,6 +53,9 @@ public class LoginControlador extends BaseControlador {
                     if(usuario == null){
                         ctx.redirect("/login.html");
                     }
+                    else if(!usuario.getAdmin()){
+                        ctx.redirect("/carro-compra/vista-tienda");
+                    }
                 });
 
                 get("/", ctx -> {
