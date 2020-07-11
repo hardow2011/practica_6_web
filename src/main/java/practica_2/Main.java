@@ -38,8 +38,8 @@ public class Main {
             // config.registerPlugin(new RouteOverviewPlugin("/rutas"));
         }).start();
 
-        // new LoginControlador(app).aplicarRutas();
-        // new CookiesSesionesControlador(app).aplicarRutas();
+        new LoginControlador(app).aplicarRutas();
+        new CookiesSesionesControlador(app).aplicarRutas();
         new CrudControlador(app).aplicarRutas();
         new CarroCompraControlador(app).aplicarRutas();
 

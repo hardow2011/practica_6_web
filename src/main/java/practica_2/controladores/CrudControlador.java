@@ -1,7 +1,7 @@
 package practica_2.controladores;
 
 import io.javalin.Javalin;
-import practica_2.entidades.Producto;
+import practica_2.entidades.*;
 import practica_2.services.ProductoServices;
 import practica_2.util.BaseControlador;
 
@@ -25,12 +25,12 @@ public class CrudControlador extends BaseControlador {
         app.routes(() -> {
             path("/crud-productos", () -> {
 
-                // before(ctx -> {
-                //     Usuario usuario = ctx.sessionAttribute("usuario");
-                //     if(usuario == null){
-                //         ctx.redirect("/login.html");
-                //     }
-                // });
+                before(ctx -> {
+                    Usuario usuario = ctx.sessionAttribute("usuario");
+                    if(usuario == null){
+                        ctx.redirect("/login.html");
+                    }
+                });
                 
                 get("/", ctx -> {
                     ctx.redirect("/crud-productos/listar");
@@ -43,15 +43,13 @@ public class CrudControlador extends BaseControlador {
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("listaProductos", listaProductos);
                     if(ctx.sessionAttribute("carroCompra") != null){
-                        // modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
-                        modelo.put("tamagnoCarritoCompra", 74);
+                        modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("templates/listaProductos.ftl", modelo);
                 });
@@ -61,14 +59,13 @@ public class CrudControlador extends BaseControlador {
                     modelo.put("accion", "/crud-productos/crear");
                     modelo.put("titulo", "Crear");
                     if(ctx.sessionAttribute("carroCompra") != null){
-                        // modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
-                        modelo.put("tamagnoCarritoCompra", 74);
+                        modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
@@ -93,15 +90,13 @@ public class CrudControlador extends BaseControlador {
 
                     // ctx.result(producto.getId() + " " + producto.getNombre() + " " + producto.getPrecio());
                     if(ctx.sessionAttribute("carroCompra") != null){
-                        // modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
-                        modelo.put("tamagnoCarritoCompra", 74);
+                        modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
                 });
@@ -131,15 +126,13 @@ public class CrudControlador extends BaseControlador {
                     modelo.put("titulo", "Visualizar");
                     modelo.put("visualizar", true);
                     if(ctx.sessionAttribute("carroCompra") != null){
-                        // modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
-                        modelo.put("tamagnoCarritoCompra", 74);
+                        modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("/templates/crearEditarVisualizar.ftl", modelo);
 

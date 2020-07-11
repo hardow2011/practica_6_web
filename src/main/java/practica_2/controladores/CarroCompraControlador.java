@@ -45,15 +45,13 @@ public class CarroCompraControlador extends BaseControlador {
                     modelo.put("listaCantidades", listaCantidades);
                     modelo.put("accion", "/carro-compra/compras");
                     if(ctx.sessionAttribute("carroCompra") != null){
-                        // modelo.put("tamagnoCarritoCompra", ((CarroCompra) ctx.sessionAttribute("carroCompra")).getListaProductos().size());
-                        modelo.put("tamagnoCarritoCompra", 74);
+                        modelo.put("tamagnoCarritoCompra", ((List<ProductoVendido>) ctx.sessionAttribute("carroCompra")).size());
                     }else{
                         modelo.put("tamagnoCarritoCompra", 0);
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("templates/vistaTienda.ftl", modelo);
                 });
@@ -80,8 +78,7 @@ public class CarroCompraControlador extends BaseControlador {
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("templates/carroCompra.ftl", modelo);
 
@@ -162,8 +159,7 @@ public class CarroCompraControlador extends BaseControlador {
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("templates/carroCompra.ftl", modelo);
 
@@ -203,8 +199,7 @@ public class CarroCompraControlador extends BaseControlador {
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("templates/carroCompra.ftl", modelo);
                 });
@@ -238,8 +233,7 @@ public class CarroCompraControlador extends BaseControlador {
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });
@@ -255,8 +249,7 @@ public class CarroCompraControlador extends BaseControlador {
                     }
                     if(ctx.sessionAttribute("usuario") != null){
                         modelo.put("conectado", "true");
-                        // modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getUsuario());
-                        modelo.put("nombreUsuario", "LecheDeSoya");
+                        modelo.put("nombreUsuario", ((Usuario) ctx.sessionAttribute("usuario")).getNombreUsuario());
                     }
                     ctx.render("templates/ventasProductos.ftl", modelo);
                 });
