@@ -54,3 +54,13 @@ dependencies {
     compile 'org.hibernate:hibernate-entitymanager:5.4.17.Final'
 
 }
+
+shadowJar{
+    baseName = 'app'
+    classifier = ''
+    archiveVersion = ''
+}
+
+task stage{
+    dependsOn shadowJar
+}
