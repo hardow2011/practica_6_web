@@ -35,7 +35,6 @@ public class BootStrapServices {
                     "-ifNotExists").start();
             //Abriendo el cliente web. El valor 0 representa puerto aleatorio.
             String status = Server.createWebServer("-trace", "-webPort", "0").start().getStatus();
-            System.out.println("Status Web: "+status);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             System.out.println("Problema con la base de datos: "+e.getMessage());

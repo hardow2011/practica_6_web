@@ -30,21 +30,19 @@ public class Main {
         // Iniciando la base de datos.
         BootStrapServices.getInstancia().init();
 
-        // ProductoServices.getInstancia().crear(new Producto("mascarilla", 152));
-        // ProductoServices.getInstancia().crear(new Producto("ropa", 874));
-        // ProductoServices.getInstancia().crear(new Producto("pantalones", 7400));
-        // ProductoServices.getInstancia().crear(new Producto("vaso", 25));
-        // ProductoServices.getInstancia().crear(new Producto("uber", 374));
-        // ProductoServices.getInstancia().crear(new Producto("sábanas", 9500));
-        // ProductoVendidoServices.getInstancia().crear(new ProductoVendido("Cereales",
-        // 78.2, 4));
-
         Javalin app = Javalin.create(config -> {
             if (UsuarioServices.getInstancia().listar().size() == 0) {
                 Usuario primerAdmin = new Usuario("admin", "admin", passwordEncryptor.encryptPassword("admin"));
                 primerAdmin.setAdmin(true);
-                UsuarioServices.getInstancia()
-                        .crear(primerAdmin);
+                UsuarioServices.getInstancia().crear(primerAdmin);
+                ProductoServices.getInstancia().crear(new Producto("mascarilla", "", 152));
+                ProductoServices.getInstancia().crear(new Producto("ropa", "", 874));
+                ProductoServices.getInstancia().crear(new Producto("pantalones", "", 7400));
+                ProductoServices.getInstancia().crear(new Producto("vaso", "", 25));
+                ProductoServices.getInstancia().crear(new Producto("uber", "", 374));
+                ProductoServices.getInstancia().crear(new Producto("sábanas", "", 9500));
+                ProductoServices.getInstancia().crear(new Producto("lápiz", "", 15));
+                ProductoServices.getInstancia().crear(new Producto("calculadora", "", 2000));
             }
             // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
              config.addStaticFiles("/publico");

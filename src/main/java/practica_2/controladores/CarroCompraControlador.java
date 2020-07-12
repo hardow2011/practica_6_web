@@ -32,15 +32,35 @@ public class CarroCompraControlador extends BaseControlador {
             path("/carro-compra", () -> {
 
                 get("/", ctx -> {
-                    ctx.redirect("/carro-compra/vista-tienda");
+                    ctx.redirect("/carro-compra/vista-tienda/1");
                 });
 
                 get("/vista-tienda", ctx -> {
-                    List<Producto> listaProductos = ProductoServices.getInstancia().listar();
+                    ctx.redirect("/carro-compra/vista-tienda/1");
+                });
+
+                get("/vista-tienda/:numPagina", ctx -> {
+
+
+                    int numPagina = Integer.parseInt(ctx.pathParam("numPagina"));
+
+                    // List<Producto> listaProductos = ProductoServices.getInstancia().listar();
+                    List<Producto> listaProductos = ProductoServices.getInstancia().pruebaPaginacion(numPagina);
+
+                    Boolean hayProximaPagina = true;
+
+                    // Si la próxima página tiene tamaño cero, no habrá botón de siguiente
+                    if(ProductoServices.getInstancia().pruebaPaginacion(numPagina+1).size() == 0){
+                        hayProximaPagina = false;
+                    }
+
+                    
                     // Crear una lista de enteros del mismo tamaño que la lista de productos llena de ceros.
                     List<Integer> listaCantidades = new ArrayList<Integer>(Collections.nCopies(listaProductos.size(), 0));
 
                     Map<String, Object> modelo = new HashMap<>();
+                    modelo.put("hayProximaPagina", hayProximaPagina);
+                    modelo.put("numPagina", numPagina);
                     modelo.put("listaProductos", listaProductos);
                     modelo.put("listaCantidades", listaCantidades);
                     modelo.put("accion", "/carro-compra/compras");
@@ -94,10 +114,10 @@ public class CarroCompraControlador extends BaseControlador {
                     // Busco si hay un carro de compras en el contexto de sesión
                     List<ProductoVendido> carroCompra = ctx.sessionAttribute("carroCompra");
 
-                    List<Producto> listaProductos = ProductoServices.getInstancia().listar();
+                    int numPagina = Integer.parseInt(ctx.formParam("numPagina"));
+                    List<Producto> listaProductos = ProductoServices.getInstancia().pruebaPaginacion(numPagina);
                     // Si no hay un carro de compras en el contexto de sesión
                     if(carroCompra == null){
-                        // System.out.println("Era nulo");
                         carroCompra = new ArrayList<ProductoVendido>();
                         // Agrego todos los productos que tuvieron más de cero cantidades a un carro de compras
                         for(int i = 0; i < listaCantidades.size(); i++){
@@ -109,12 +129,9 @@ public class CarroCompraControlador extends BaseControlador {
                     // De otro modo
                     }
                     else{
-                        System.out.println("\n\nExiiiiste\n\n");
-                        // System.out.println("No era nulo");
                         for(int i = 0; i < listaCantidades.size(); i++){
                             if(listaCantidades.get(i) != 0){
                                 if(carroCompra.size() == 0){
-                                    System.out.println(carroCompra.size());
                                     ProductoVendido productoEnCarrito = new ProductoVendido(listaProductos.get(i).getNombre(), listaProductos.get(i).getPrecio(), listaCantidades.get(i), listaProductos.get(i).getId());
                                     carroCompra.add(productoEnCarrito);
                                     continue;

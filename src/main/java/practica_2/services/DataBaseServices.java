@@ -50,7 +50,6 @@ public class DataBaseServices {
     public void testConexion() {
         try {
             getConexion().close();
-            System.out.println("Conexión realizado con éxito...");
         } catch (SQLException ex) {
             Logger.getLogger(ProductoServices.class.getName()).log(Level.SEVERE, null, ex);
         }

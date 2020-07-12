@@ -96,7 +96,6 @@ public class CrudControlador extends BaseControlador {
                             String encodedString = Base64.getEncoder().encodeToString(bytes);
                             Foto foto = new Foto(uploadedFile.getFilename(), uploadedFile.getContentType(), encodedString, producto);
                             FotoServices.getInstancia().crear(foto);
-                            System.out.println("\n\nHaaaaaahaha\n\n");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

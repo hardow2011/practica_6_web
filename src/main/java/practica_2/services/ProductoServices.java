@@ -1,5 +1,12 @@
 package practica_2.services;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+
 import practica_2.entidades.Producto;
 
 public class ProductoServices extends GestionDb<Producto>{
@@ -16,6 +23,22 @@ public class ProductoServices extends GestionDb<Producto>{
             instancia = new ProductoServices();
         }
         return instancia;
+    }
+
+    public List<Producto> pruebaPaginacion(int pagina){
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("from Producto", Producto.class);
+        int paginaPaginacion = 5*(pagina-1);
+        query.setFirstResult(paginaPaginacion);
+        query.setMaxResults(5);
+        List<Producto> lista = query.getResultList();
+
+        System.out.println("\n\n\n\n\n");
+        System.out.println(lista.size());
+        for (Producto producto : lista) {
+            System.out.println(producto.getNombre());
+        }
+        return lista;
     }
 
 }
