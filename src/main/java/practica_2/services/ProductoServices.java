@@ -45,23 +45,19 @@ public class ProductoServices extends GestionDb<Producto>{
         return lista;
     }
 
+    // Esa función es necesaria para recuperar los atributos de manera LAZY...
+    // porque si no se recuperan de manera EAGER, se cierra la conexión...
+    // y hay que volver a abrirla por aquí.
     public Set<Foto> obtenerFotosPorProductoId(int idProducto) {
-        // String queryString = "SELECT f FROM Foto f " +
-        //                      "WHERE f.producto_id = :idProducto";
         Query query = getEntityManager().createNamedQuery("Producto.obtenerFotosPorProductoId", Foto.class);
         query.setParameter("idProducto", idProducto);
         return new HashSet<Foto>(query.getResultList());
 
-
-        // EntityManager em = getEntityManager();
-        // Query query = em.createNamedQuery("Producto.obtenerFotosPorProductoId");
-        // query.setParameter("idProducto", idProducto);
-        // List<Clase> lista = query.getResultList();
-        // em.create
-
     }
     
-
+    // Esa función es necesaria para recuperar los atrubutos de manera LAZY...
+    // porque si no se recuperan de manera EAGER, se cierra la conexión...
+    // y hay que volver a abrirla por aquí.
     public Set<Comentario> obtenerComentariosPorProductoId(int idProducto) {
         Query query = getEntityManager().createNamedQuery("Producto.obtenerComentariosPorProductoId", Comentario.class);
         query.setParameter("idProducto", idProducto);

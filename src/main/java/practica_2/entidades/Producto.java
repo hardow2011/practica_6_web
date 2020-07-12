@@ -14,6 +14,9 @@ import org.hibernate.Session;
 import practica_2.services.ProductoServices;
 
 @Entity
+// Esas queries son necesarias para recuperar los atributos de manera LAZY...
+// porque si no se recuperan de manera EAGER, se cierra la conexión...
+// y hay que volver a abrirla en el Service.
 @NamedQueries({
     @NamedQuery(name = "Producto.obtenerFotosPorProductoId", query = "SELECT f FROM Foto f WHERE f.producto.id = :idProducto"),  
     @NamedQuery(name = "Producto.obtenerComentariosPorProductoId", query = "SELECT c FROM Comentario c WHERE c.producto.id = :idProducto")
