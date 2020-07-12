@@ -7,10 +7,17 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 
+import practica_2.services.ProductoServices;
+
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Producto.obtenerFotosPorProductoId", query = "SELECT f FROM Foto f WHERE f.producto.id = :idProducto"),  
+    @NamedQuery(name = "Producto.obtenerComentariosPorProductoId", query = "SELECT c FROM Comentario c WHERE c.producto.id = :idProducto")
+})
 public class Producto  implements Serializable{
     
     @Id
@@ -20,9 +27,9 @@ public class Producto  implements Serializable{
     private String descripcion;
     private double precio;
     // Cambiar List a Set porque al parecer dos Lists no pueden ser FetchType.Eager a la vez
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "producto", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "producto", fetch = FetchType.LAZY)
     private Set<Foto> listaFotos = new HashSet<>();
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "producto", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "producto", fetch = FetchType.LAZY)
     private Set<Comentario> listaComentarios = new HashSet<>();
 
     public Producto(){
@@ -71,6 +78,7 @@ public class Producto  implements Serializable{
     }
 
     public Set<Foto> getListaFotos() {
+        listaFotos = ProductoServices.getInstancia().obtenerFotosPorProductoId(id);
         return listaFotos;
     }
 
@@ -86,7 +94,9 @@ public class Producto  implements Serializable{
         this.descripcion = descripcion;
     }
 
+    @Transactional
     public Set<Comentario> getListaComentarios() {
+        listaComentarios = ProductoServices.getInstancia().obtenerComentariosPorProductoId(id);
         return listaComentarios;
     }
 }

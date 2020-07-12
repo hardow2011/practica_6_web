@@ -1,12 +1,16 @@
 package practica_2.services;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
+import practica_2.entidades.Comentario;
+import practica_2.entidades.Foto;
 import practica_2.entidades.Producto;
 
 public class ProductoServices extends GestionDb<Producto>{
@@ -39,6 +43,29 @@ public class ProductoServices extends GestionDb<Producto>{
             System.out.println(producto.getNombre());
         }
         return lista;
+    }
+
+    public Set<Foto> obtenerFotosPorProductoId(int idProducto) {
+        // String queryString = "SELECT f FROM Foto f " +
+        //                      "WHERE f.producto_id = :idProducto";
+        Query query = getEntityManager().createNamedQuery("Producto.obtenerFotosPorProductoId", Foto.class);
+        query.setParameter("idProducto", idProducto);
+        return new HashSet<Foto>(query.getResultList());
+
+
+        // EntityManager em = getEntityManager();
+        // Query query = em.createNamedQuery("Producto.obtenerFotosPorProductoId");
+        // query.setParameter("idProducto", idProducto);
+        // List<Clase> lista = query.getResultList();
+        // em.create
+
+    }
+    
+
+    public Set<Comentario> obtenerComentariosPorProductoId(int idProducto) {
+        Query query = getEntityManager().createNamedQuery("Producto.obtenerComentariosPorProductoId", Comentario.class);
+        query.setParameter("idProducto", idProducto);
+        return new HashSet<Comentario>(query.getResultList());
     }
 
 }

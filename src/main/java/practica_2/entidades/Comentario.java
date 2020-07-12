@@ -11,6 +11,7 @@ public class Comentario implements Serializable{
     private int id;
     String texto;
     @ManyToOne
+    @JoinColumn(name="PRODUCTO_ID")
     Producto producto;
 
     public Comentario(){

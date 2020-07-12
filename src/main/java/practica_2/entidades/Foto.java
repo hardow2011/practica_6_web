@@ -16,6 +16,7 @@ public class Foto implements Serializable{
     @Lob
     private String fotoBase64;
     @ManyToOne
+    @JoinColumn(name="PRODUCTO_ID")
     private Producto producto;
 
     public Foto() {
