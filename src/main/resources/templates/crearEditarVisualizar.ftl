@@ -51,11 +51,24 @@
                         <h1>No hay comentarios</h1>
                         </#if>
                     <#else>
-                        <input type="hidden" value="${producto.id}" name="idProducto"/>
+                        <input type="hidden" value="${(producto.id)!}" name="idProducto"/>
                         <label for="nombreInput">Nombre</label>
                         <input type="text" class="form-control" value="${producto.nombre}" id="nombreInput" name="nombreProducto" required/><br>
                         <label for="precioInput">Precio</label>
                         <input type="number" step="0.01" class="form-control" id="precioInput" value="${producto.precio?string['0']}" name="precioProducto" required/><br>
+                        <label for="fotoInput">Agregar fotos</label>
+                        <input class="form-control" id="fotoInput" type="file" name="fotoProducto" multiple>
+                        <#if listaFotos??>
+                            <h1>Fotos</h1>
+                            <#foreach foto in listaFotos>
+                            <div>
+                                <a class="btn btn-danger" href="/crud-productos/eliminar-foto/${foto.id}/${producto.id}">Eliminar</a>    
+                                <img src="data:${foto.mimeType};base64,${foto.fotoBase64}" class="imagen-producto" alt="Foto enviada"/>
+                            </div>
+                            </#foreach>
+                        <#else>
+                            <h1>No hay fotos</h1>
+                        </#if>
                     </#if>
                 <#else>
                 <label for="nombreInput">Nombre</label>

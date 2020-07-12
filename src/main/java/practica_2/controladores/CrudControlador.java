@@ -109,8 +109,11 @@ public class CrudControlador extends BaseControlador {
                     // Producto producto = tienda.getProductoPorId(Integer.parseInt(ctx.pathParam("idProducto")));
                     Producto producto = ProductoServices.getInstancia().find(Integer.parseInt(ctx.pathParam("idProducto")));
 
+                    Set<Foto> listaFotos = producto.getListaFotos();
+
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("producto", producto);
+                    modelo.put("listaFotos", listaFotos);
                     modelo.put("accion", "/crud-productos/editar");
                     modelo.put("titulo", "Editar");
 
@@ -128,12 +131,24 @@ public class CrudControlador extends BaseControlador {
                 });
 
                 post("editar/", ctx -> {
+                    
                     int id = ctx.formParam("idProducto", Integer.class).get();
                     Producto producto = ProductoServices.getInstancia().find(id);
                     String nombre = ctx.formParam("nombreProducto");
                     Double precio = ctx.formParam("precioProducto", Double.class).get();
                     producto.setNombre(nombre);
                     producto.setPrecio(precio);
+
+                    ctx.uploadedFiles("fotoProducto").forEach(uploadedFile -> {
+                        try {
+                            byte[] bytes = uploadedFile.getContent().readAllBytes();
+                            String encodedString = Base64.getEncoder().encodeToString(bytes);
+                            Foto foto = new Foto(uploadedFile.getFilename(), uploadedFile.getContentType(), encodedString, producto);
+                            FotoServices.getInstancia().crear(foto);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
 
                     // Obtener la cantidad de un producto en caso de que alguien esté en medio de hacer su carrito de compras...
                     // así no pierde la cantidad que había seleccionado.
@@ -178,6 +193,14 @@ public class CrudControlador extends BaseControlador {
 
                     ComentarioServices.getInstancia().eliminar(idComentario);
                     ctx.redirect("/crud-productos/visualizar/"+idProducto);
+                });
+
+                get("/eliminar-foto/:idFoto/:idProducto", ctx -> {
+                    int idFoto = ctx.pathParam("idFoto", Integer.class).get();
+                    int idProducto = ctx.pathParam("idProducto", Integer.class).get();
+
+                    FotoServices.getInstancia().eliminar(idFoto);
+                    ctx.redirect("/crud-productos/editar/"+idProducto);
                 });
 
                 post("/publicar-comentario", ctx -> {

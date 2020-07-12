@@ -20,9 +20,9 @@ public class Producto  implements Serializable{
     private String descripcion;
     private double precio;
     // Cambiar List a Set porque al parecer dos Lists no pueden ser FetchType.Eager a la vez
-    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "producto", fetch = FetchType.EAGER)
     private Set<Foto> listaFotos = new HashSet<>();
-    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "producto", fetch = FetchType.EAGER)
     private Set<Comentario> listaComentarios = new HashSet<>();
 
     public Producto(){

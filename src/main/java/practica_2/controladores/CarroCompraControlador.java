@@ -45,12 +45,12 @@ public class CarroCompraControlador extends BaseControlador {
                     int numPagina = Integer.parseInt(ctx.pathParam("numPagina"));
 
                     // List<Producto> listaProductos = ProductoServices.getInstancia().listar();
-                    List<Producto> listaProductos = ProductoServices.getInstancia().pruebaPaginacion(numPagina);
+                    List<Producto> listaProductos = ProductoServices.getInstancia().obtenerPorPaginacion(numPagina);
 
                     Boolean hayProximaPagina = true;
 
                     // Si la próxima página tiene tamaño cero, no habrá botón de siguiente
-                    if(ProductoServices.getInstancia().pruebaPaginacion(numPagina+1).size() == 0){
+                    if(ProductoServices.getInstancia().obtenerPorPaginacion(numPagina+1).size() == 0){
                         hayProximaPagina = false;
                     }
 
@@ -115,7 +115,7 @@ public class CarroCompraControlador extends BaseControlador {
                     List<ProductoVendido> carroCompra = ctx.sessionAttribute("carroCompra");
 
                     int numPagina = Integer.parseInt(ctx.formParam("numPagina"));
-                    List<Producto> listaProductos = ProductoServices.getInstancia().pruebaPaginacion(numPagina);
+                    List<Producto> listaProductos = ProductoServices.getInstancia().obtenerPorPaginacion(numPagina);
                     // Si no hay un carro de compras en el contexto de sesión
                     if(carroCompra == null){
                         carroCompra = new ArrayList<ProductoVendido>();

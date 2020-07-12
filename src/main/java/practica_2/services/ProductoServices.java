@@ -25,12 +25,12 @@ public class ProductoServices extends GestionDb<Producto>{
         return instancia;
     }
 
-    public List<Producto> pruebaPaginacion(int pagina){
+    public List<Producto> obtenerPorPaginacion(int pagina){
         EntityManager em = getEntityManager();
         Query query = em.createQuery("from Producto", Producto.class);
-        int paginaPaginacion = 5*(pagina-1);
+        int paginaPaginacion = 10*(pagina-1);
         query.setFirstResult(paginaPaginacion);
-        query.setMaxResults(5);
+        query.setMaxResults(10);
         List<Producto> lista = query.getResultList();
 
         System.out.println("\n\n\n\n\n");
