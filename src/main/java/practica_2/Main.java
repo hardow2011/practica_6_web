@@ -24,11 +24,21 @@ import practica_2.services.UsuarioServices;
 public class Main {
 
     static StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+    private static String modoConexion = "";
 
     public static void main(String[] args) throws SQLException {
 
-        // Iniciando la base de datos.
-        BootStrapServices.getInstancia().init();
+        String mensaje = "Software ORM - JPA";
+        System.out.println(mensaje);
+        if(args.length >= 1){
+            modoConexion = args[0];
+            System.out.println("Modo de Operacion: "+modoConexion);
+        }
+
+        //Iniciando la base de datos.
+        if(modoConexion.isEmpty()) {
+            BootStrapServices.getInstancia().init();
+        }
 
         Javalin app = Javalin.create(config -> {
             if (UsuarioServices.getInstancia().listar().size() == 0) {
@@ -40,12 +50,24 @@ public class Main {
             // Si la carpeta /publico no tiene ningún archivo, el build de Gradle fallará.
              config.addStaticFiles("/publico");
             // config.registerPlugin(new RouteOverviewPlugin("/rutas"));
-        }).start();
+        }).start(getHerokuAssignedPort());
 
         new LoginControlador(app).aplicarRutas();
         new CookiesSesionesControlador(app).aplicarRutas();
         new CrudControlador(app).aplicarRutas();
         new CarroCompraControlador(app).aplicarRutas();
 
+    }
+
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 7000; //Retorna el puerto por defecto en caso de no estar en Heroku.
+    }
+
+    public static String getModoConexion(){
+        return modoConexion;
     }
 }
